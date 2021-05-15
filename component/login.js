@@ -8,11 +8,18 @@ class Login extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
+      loggedIn: false
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     setTimeout( () => SplashScreen.hide(), 1000);
+    GoogleSignin.configure({
+      webClientId: '', 
+      offlineAccess: true, 
+      hostedDomain: '', 
+      forceConsentPrompt: true, 
+    });
   }
 
   _signIn = async () => {
@@ -33,6 +40,16 @@ class Login extends React.Component{
     }
   };
 
+  signOut = async () => {
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+      this.setState({ user: null, loggedIn: false }); // Remember to remove the user from your app's state as well
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -43,22 +60,27 @@ class Login extends React.Component{
       <View style = {styles.middleStyle}>
         <Text style = {{color: "#979EAC", fontSize:15}}>Email</Text>
         <TextInput style = {styles.textInput}><Icon name="mail-outline" size={20}></Icon></TextInput>
-        <Text style = {{color: "#979EAC", fontSize:15, paddingTop:20}}>Password</Text>
+        <Text style = {{color: "#979EAC", fontSize:15, marginTop:50}}>Password</Text>
         <TextInput style = {styles.textInput}><Icon name="lock-closed-outline" size={20}></Icon></TextInput>
       </View>
       <View style = {styles.buttonStyle}>
-        <Button
-          title="Log in"
-          color = "#1058F4"
-          onPress={() => this.props.navigation.navigate('Main')}
-        />
-        <Text style = {{textAlign:"center", paddingTop:15, paddingBottom:15}}>OR</Text>
+        <TouchableOpacity style={styles.touchOpa} onPress={() => this.props.navigation.navigate('Main')}>
+          <Text style={{color:'white', fontWeight: 'bold'}}>Log in</Text>
+        </TouchableOpacity>
+        <Text style = {{textAlign:"center", paddingTop:15, paddingBottom:15, color: "#979EAC", fontWeight:'bold'}}>OR</Text>
         <GoogleSigninButton
           style={{ width: 300, height: 48 }}
           size={GoogleSigninButton.Size.Wide}
           color={GoogleSigninButton.Color.Light}
           onPress={this._signIn}
           disabled={this.state.isSigninInProgress} />
+          <View style={styles.buttonContainer}>
+            {!this.state.loggedIn && <Text>You are currently logged out</Text>}
+            {this.state.loggedIn && <Button onPress={this.signOut}
+              title="Signout"
+              color="#841584">
+            </Button>}
+          </View>
       </View>
       <View style = {styles.bottomStyle}>
         <Button
@@ -103,21 +125,26 @@ const styles = StyleSheet.create({
   buttonStyle: {
     margin: 50,
     paddingTop: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 12,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    elevation: 7,
   },
   bottomStyle: {
     flexDirection: 'row',
     justifyContent: 'center',
+    marginTop:10,
   },
-  Button: {
-    backgroundColor: "black"
+  touchOpa: {
+    backgroundColor: "#1058F4",
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 39,
+    color: '#FFFFFF',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   }
 });
 

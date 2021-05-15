@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* danshowFront_iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* danshowFront_iosTests.m */; };
+		0966B8AF264FA2B10012EC18 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0966B8AE264FA2B10012EC18 /* GoogleService-Info.plist */; };
 		097C8C9B264F909E003E31ED /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 097C8C9A264F909E003E31ED /* SplashScreen.storyboard */; };
 		09FBEFA0264F09040049F0B2 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 09FBEF9F264F09040049F0B2 /* Fonts */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -32,6 +33,7 @@
 		00E356EE1AD99517003FC87E /* danshowFront_iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = danshowFront_iosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* danshowFront_iosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = danshowFront_iosTests.m; sourceTree = "<group>"; };
+		0966B8AE264FA2B10012EC18 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "danshowFront_ios/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		097C8C9A264F909E003E31ED /* SplashScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SplashScreen.storyboard; sourceTree = "<group>"; };
 		09FBEF9F264F09040049F0B2 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* danshowFront_ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = danshowFront_ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +123,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				0966B8AE264FA2B10012EC18 /* GoogleService-Info.plist */,
 				09FBEF9F264F09040049F0B2 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* danshowFront_ios */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -250,6 +253,7 @@
 			files = (
 				09FBEFA0264F09040049F0B2 /* Fonts in Resources */,
 				097C8C9B264F909E003E31ED /* SplashScreen.storyboard in Resources */,
+				0966B8AF264FA2B10012EC18 /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
