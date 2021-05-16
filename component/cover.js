@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View, ScrollView, Image} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View, ScrollView, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function Mainpage({navigation}) {
@@ -17,12 +17,12 @@ export default function Mainpage({navigation}) {
         </View>
         <View style = {styles.contents}>
             <Image 
-            source={require("./icon/brave_screen.png")}
+            source={require("./icon/bts_screen.png")}
             style={{resizeMode:'cover', width:400, height:180, marginBottom:10, marginTop:10}}></Image>
             <View style = {styles.contentInfo}>
                 <View>
-                    <Text style={{fontWeight:'normal', fontSize:15}}>BraveGirls-Rollin Lecture Video</Text>
-                    <Text style={{fontSize:14, color:'#C4C4C4', marginTop:5}}>Views: 20k  Difficulty: 4  Genre: k-pop</Text>
+                    <Text style={{fontWeight:'normal', fontSize:15}}>BTS-Dynamite Cover</Text>
+                    <Text style={{fontSize:14, color:'#C4C4C4', marginTop:5}}>Views: 14k  Difficulty: 5  Genre: k-pop</Text>
                 </View>
                 <View style ={{marginLeft:30}}>
                   <Icon name="thumbs-up-outline" size={25}></Icon>
@@ -36,8 +36,8 @@ export default function Mainpage({navigation}) {
         </View>
         <View style = {styles.contents}>
           <View style={styles.contentInfo}>
-            <Image style={{borderRadius:10}} source={require("./icon/person2.png")}></Image>
-            <Text style={{marginTop:10, marginLeft:10, fontSize:18}}>Lia Kim</Text>
+            <Image style={{borderRadius:10}} source={require("./icon/person1.png")}></Image>
+            <Text style={{marginTop:10, marginLeft:10, fontSize:18}}>Masa</Text>
           </View>
         </View>
         <View style={{flexDirection:'row', margin:20}}>
@@ -56,11 +56,10 @@ export default function Mainpage({navigation}) {
             <Text style={{marginTop:10, marginLeft:20, fontSize:18}}>Perfect</Text>
           </View>
         </View>
-        <View style={styles.comment}>
-          <View style={styles.commentInfo}>
-            <Image style={{borderRadius:10}} source={require("./icon/person2.png")}></Image>
-            <Text style={{marginTop:10, marginLeft:20, fontSize:18}}>Awesome</Text>
-          </View>
+        <View style = {styles.buttonStyle}>
+            <TouchableOpacity style={styles.touchOpa} onPress={() => navigation.navigate('test_page')}>
+                <Text style={{color:'white', fontWeight: 'bold'}}>Go to test with your videos</Text>
+            </TouchableOpacity>
         </View>
       </ScrollView>
   </SafeAreaView>
@@ -95,5 +94,27 @@ const styles = StyleSheet.create({
       marginLeft: 20,
       marginBottom: 15,
       marginTop:10,
+  },
+  buttonStyle: {
+    marginTop: 50,
+    marginBottom: 50,
+    marginLeft: 50,
+    marginRight: 50,
+  },
+  touchOpa: {
+    backgroundColor: "#1058F4",
+    alignItems: 'center',
+    justifyContent: 'center',
+    width:300,
+    height: 39,
+    color: '#FFFFFF',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   }
 });

@@ -75,7 +75,6 @@ class Login extends React.Component{
           onPress={this._signIn}
           disabled={this.state.isSigninInProgress} />
           <View style={styles.buttonContainer}>
-            {!this.state.loggedIn && <Text>You are currently logged out</Text>}
             {this.state.loggedIn && <Button onPress={this.signOut}
               title="Signout"
               color="#841584">

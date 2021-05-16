@@ -1,54 +1,59 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View, Button, Image} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View, ScrollView ,Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-class Mainpage extends React.Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
+export default function Mainpage({navigation}) {
 
-  render() {
-    return (
-      <SafeAreaView style={styles.container}>
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
         <View style = {styles.topHeader}>
             <Image 
-            style = {{margin: 15, marginRight:100}}
+            style = {{margin: 15, marginRight:90}}
             source={require("./icon/danshow_logo.png")}></Image>
             <Icon name="funnel-outline" size={30} style={{padding:10}}></Icon>
             <Icon name="search-outline" size={30}style={{padding:10}}></Icon>
             <Icon name="notifications-outline" size={30}style={{padding:10}}></Icon>
         </View>
         <View style = {styles.contents}>
-            <Text style = {{padding:10, fontSize:15, fontWeight:'bold'}}>Cover Channel</Text>
-            <Image 
-            source={require("./icon/bts_screen.png")}
-            style={{resizeMode:'cover', width:400, marginBottom:10}}></Image>
+            <Text style = {{padding:15, fontSize:15, fontWeight:'bold'}}>Cover Channel</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Cover')}>
+              <Image source={require("./icon/bts_screen.png")} style={{resizeMode:'cover', width:400, height:180, marginBottom:10}}></Image>
+            </TouchableOpacity>
             <View style = {styles.contentInfo}>
                 <Image source={require("./icon/person1.png")}></Image>
                 <View style={{marginLeft:10}}>
                     <Text style={{fontWeight:'bold', fontSize:15}}>BTS-Dynamite cover</Text>
-                    <Text style={{fontSize:12, color:'#C4C4C4'}}>Views: 14k  Difficulty: 5  Genre: k-pop</Text>
+                    <Text style={{fontSize:12, color:'#C4C4C4', marginTop:5}}>Views: 14k  Difficulty: 5  Genre: k-pop</Text>
                 </View>
             </View>
         </View>
         <View style = {styles.contents}>
-            <Text style = {{padding:10, paddingLeft:10, fontSize:15, fontWeight:'bold'}}>Lecture Channel</Text>
-            <Image 
-            source={require("./icon/brave_screen.png")}
-            style={{resizeMode:'cover', width:400, marginBottom:10}}></Image>
-                        <View style = {styles.contentInfo}>
+            <Text style = {{padding:15, paddingLeft:10, fontSize:15, fontWeight:'bold'}}>Lecture Channel</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Lecture')}>
+              <Image source={require("./icon/brave_screen.png")} style={{resizeMode:'cover', width:400, height:180, marginBottom:10}}></Image>
+            </TouchableOpacity>
+            <View style = {styles.contentInfo}>
                 <Image source={require("./icon/person2.png")}></Image>
                 <View style={{marginLeft:10}}>
                     <Text style={{fontWeight:'bold', fontSize:15}}>BraveGirls-Rollin Lecture Video</Text>
-                    <Text style={{fontSize:12, color:'#C4C4C4'}}>Views: 20k  Difficulty: 4  Genre: k-pop</Text>
+                    <Text style={{fontSize:12, color:'#C4C4C4', marginTop:5}}>Views: 20k  Difficulty: 4  Genre: k-pop</Text>
+                </View>
+            </View>
+            <TouchableOpacity>
+              <Image source={require("./icon/twice.jpeg")} style={{resizeMode:'cover', width:400, height:180, marginBottom:10}}></Image>
+            </TouchableOpacity>
+            <View style = {styles.contentInfo}>
+                <Image source={require("./icon/person2.png")}></Image>
+                <View style={{marginLeft:10}}>
+                    <Text style={{fontWeight:'bold', fontSize:15}}>Twice-CHEER UP Lecture Video</Text>
+                    <Text style={{fontSize:12, color:'#C4C4C4', marginTop:5}}>Views: 20k  Difficulty: 4  Genre: k-pop</Text>
                 </View>
             </View>
         </View>
-    </SafeAreaView>
-    );
-  };
+      </ScrollView>
+  </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -66,12 +71,12 @@ const styles = StyleSheet.create({
   contents: {
     borderBottomColor: '#C4C4C4',
     borderBottomWidth: 1.5,
+    marginBottom: 10,
   },
   contentInfo: {
       flexDirection: 'row',
       marginLeft: 20,
-      marginBottom: 15,
+      marginBottom: 20,
+      marginTop:10,
   }
 });
-
-export default Mainpage;
