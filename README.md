@@ -1,4 +1,4 @@
-# Getting Started React Native App
+# Getting Started with React Native App
 
 ## Before executing
 
