@@ -2,7 +2,7 @@ import React from 'react';
 import {SafeAreaView, StyleSheet, Text, View, ScrollView, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export default function Mainpage({navigation}) {
+export default function Cover({navigation}) {
 
   return (
     <SafeAreaView style={styles.container}>

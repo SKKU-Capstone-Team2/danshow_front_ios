@@ -25,7 +25,7 @@ export default function Mypage({navigation}) {
                   <View style={{marginTop:15, marginRight:15}}>
                     <Text style={{fontWeight:'bold', fontSize:13, marginBottom:5}}>User type</Text>
                     <TouchableOpacity style={styles.smallInfo}>
-                      <Text style={{fontWeight:'bold', color:"white", fontSize:13}}>User</Text>
+                      <Text style={{fontWeight:'bold', color:"white", fontSize:13}}>Dancer</Text>
                     </TouchableOpacity>
                   </View>
                   <View style={{marginRight:10}}>
@@ -52,8 +52,39 @@ Subscribe`}</Text>
               </TouchableOpacity>
             </View>
             <View style={{backgroundColor:'#E9E8E8', height:2}}></View>
+            <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:20, marginLeft:20, marginRight:20, marginBottom:10}}>
+                <Text style={{fontWeight:'bold', fontSize:15}}>Video management</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Cnl')} style={styles.middleInfo}>
+                    <Text style={{fontWeight:'bold', color:"white", fontSize:10}}>Create New Video</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={{backgroundColor:'#E9E8E8', height:1}}></View>
+            <View style={{flexDirection:'row', marginTop:5, marginRight:20, justifyContent:'flex-end'}}>
+                <Text style={{fontSize:11}}>Date            </Text>
+                <Text style={{fontSize:11}}>View            </Text>
+                <Text style={{fontSize:11}}>Like  </Text>
+            </View>
+            <View style={{margin:10, flexDirection:'row'}}>
+                <Image 
+                style={{width:60, height:50, borderRadius:8}}
+                source={require("./icon/bts_screen.png")}></Image>
+                <Text style={{fontSize:10, margin:20}}>BTS-Dynamite Cover</Text>
+                <Text style={{fontSize:8, marginTop:20, marginRight:30}}>2021.3.15</Text>
+                <Text style={{fontSize:8, marginTop:20, marginRight:30}}>100,000</Text>
+                <Text style={{fontSize:8, marginTop:20}}>10,000</Text>
+            </View>
+            <View style={{margin:10, flexDirection:'row'}}>
+                <Image 
+                style={{width:60, height:50, borderRadius:8}}
+                source={require("./icon/brave_screen.png")}></Image>
+                <Text style={{fontSize:10, margin:20, width:100}}>BraveGirls - Rollin Lecture Video</Text>
+                <Text style={{fontSize:8, marginTop:20, marginRight:30}}>2021.3.15</Text>
+                <Text style={{fontSize:8, marginTop:20, marginRight:30}}>100,000</Text>
+                <Text style={{fontSize:8, marginTop:20}}>10,000</Text>
+            </View>
+            <View style={{backgroundColor:'#E9E8E8', height:2}}></View>
             <View style={{margin:20}}>
-              <Text style={{fontWeight:'bold', fontSize:15}}>Contend Watch</Text>
+              <Text style={{fontWeight:'bold', fontSize:15}}>Uploaded video</Text>
               <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                 <View style={{marginTop:20, width:110}}>
                   <Image 
@@ -77,31 +108,7 @@ Subscribe`}</Text>
             </View>
             <View style={{backgroundColor:'#E9E8E8', height:2}}></View>
             <View style={{margin:20}}>
-              <Text style={{fontWeight:'bold', fontSize:15}}>Favorite Contents</Text>
-              <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                <View style={{marginTop:20, width:110}}>
-                  <Image 
-                  style={{width:90, height:70, borderRadius:8}}
-                  source={require("./icon/brave_screen.png")}></Image>
-                  <Text style={{fontSize:12}}>BraveGirls - Rollin Lecture Video</Text>
-                </View>
-                <View style={{marginTop:20, width:110}}>
-                  <Image 
-                  style={{width:90, height:70, borderRadius:8}}
-                  source={require("./icon/bts_screen.png")}></Image>
-                  <Text style={{fontSize:12}}>BTS-Dynamite Cover</Text>
-                </View>
-                <View style={{marginTop:20, width:110}}>
-                  <Image 
-                  style={{width:90, height:70, borderRadius:8}}
-                  source={require("./icon/dancingman.png")}></Image>
-                  <Text style={{fontSize:12}}>BTS-Dynamite Cover</Text>
-                </View>
-              </View>
-            </View>
-            <View style={{backgroundColor:'#E9E8E8', height:2}}></View>
-            <View style={{margin:20}}>
-              <Text style={{fontWeight:'bold', fontSize:15}}>Crew participated</Text>
+              <Text style={{fontWeight:'bold', fontSize:15}}>Made Crew</Text>
               <View style={styles.crewInforow}>
                 <TouchableOpacity style={styles.crewInfo}>
                   <Image style={styles.crewImage} source={require("./icon/lorem.png")}></Image>
@@ -151,6 +158,23 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
       elevation: 5,
+    },
+    middleInfo: {
+        backgroundColor: "#1058F4",
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius:5,
+        width:100,
+        height: 25,
+        color: '#FFFFFF',
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 5,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
     touchOpa: {
       marginTop:20,

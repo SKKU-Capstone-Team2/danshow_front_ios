@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Mainpage from './main_page';
 import Crew from './crew';
-import Mypage from './mypage_user';
+import Mypage from './mypage_dancer';
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import Lecture from "./lecture";
@@ -12,6 +12,7 @@ import Detail_Crew from "./detail_crew";
 import Test_page from "./test_page";
 import Tp_detail from "./tp_detail";
 import Cover from "./cover";
+import Create_new_lecture from "./create_new_lecture";
 
 const HomeStack = createStackNavigator();
 
@@ -44,7 +45,8 @@ const MypageStack = createStackNavigator();
 function MypageStackScreen() {
     return (
         <MypageStack.Navigator>
-            <MypageStack.Screen name="Mypage" component={Mypage}/>
+            <MypageStack.Screen name="Mypage" component={Mypage} options={{headerShown: false}}/>
+            <MypageStack.Screen name="Cnl" component={Create_new_lecture} options={{headerShown: false}}/>
         </MypageStack.Navigator>
     )
 }

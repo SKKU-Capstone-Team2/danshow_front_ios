@@ -5,7 +5,7 @@ import {Picker} from '@react-native-picker/picker';
 import CheckBox from '@react-native-community/checkbox';
 
 export default function Signup({navigation}) {
-    const [selectedLanguage, setSelectedLanguage] = useState();
+    const [selectedtype, setSelectedLanguage] = useState();
     const [toggleCheckBox, setToggleCheckBox] = useState(false);
   return(
     <SafeAreaView style={styles.container}>
@@ -25,7 +25,7 @@ export default function Signup({navigation}) {
           <Picker
             style={{borderColor:'#979EAC', height:100}}
             itemStyle={{height:100}}
-            selectedValue={selectedLanguage}
+            selectedValue={selectedtype}
             onValueChange={(itemValue, itemIndex) =>
               setSelectedLanguage(itemValue)
             }>

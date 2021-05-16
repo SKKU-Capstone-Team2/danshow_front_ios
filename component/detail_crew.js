@@ -2,7 +2,7 @@ import React from 'react';
 import {SafeAreaView, StyleSheet, Text, View, ScrollView ,TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export default function Crew({navigation}){
+export default function Detail_crew({navigation}){
   return (
     <SafeAreaView style={styles.container}>
         <ScrollView>

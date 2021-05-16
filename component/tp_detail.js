@@ -1,54 +1,49 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View, ScrollView, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export default function Crew({navigation}){
+export default function Tp_detail({navigation}){
   return (
     <SafeAreaView style={styles.container}>
-    <View style = {styles.topHeader}>
-        <Image 
-        style = {{margin: 15, marginRight:90}}
-        source={require("./icon/danshow_logo.png")}></Image>
-        <Icon name="funnel-outline" size={30} style={{padding:10}}></Icon>
-        <Icon name="search-outline" size={30}style={{padding:10}}></Icon>
-        <Icon name="notifications-outline" size={30}style={{padding:10}}></Icon>
-    </View>
-    <View style={styles.searchBox}>
-      <Icon name="search-outline" size={20}style={{padding:10, color:'#C4C4C4'}}></Icon>
-      <Text style={{marginTop:14, color:'#C4C4C4'}}>Crew Name, Crew Captain Search</Text>
-    </View>
-    <View style = {styles.contentRow}>
-        <Text style = {{padding:10, fontSize:18, fontWeight:'bold', marginRight:100}}>All Crew Views</Text>
-        <TouchableOpacity
-        onPress={() => navigation.navigate('Create_Crew')}
-        style={styles.button}><Text style={{color:'white', fontWeight:'bold'}}>Create Crew</Text></TouchableOpacity>
-    </View>
-    <View style={styles.crewInforow}>
-      <TouchableOpacity style={styles.crewInfo}>
-        <Image style={styles.crewImage} source={require("./icon/dickies.png")}></Image>
-        <Text style={styles.crewName}>Dickids Crew</Text>
-        <Text style={styles.crewIntro}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra quam et odio in sit phasellus. Sit phasellus semper condimentum tellus lacus, sit.</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.crewInfo}>
-        <Image style={styles.crewImage} source={require("./icon/lorem.png")}></Image>
-        <Text style={styles.crewName}>Lorem Crew</Text>
-        <Text style={styles.crewIntro}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra quam et odio in sit phasellus. Sit phasellus semper condimentum tellus lacus, sit.</Text>
-      </TouchableOpacity>
-    </View>
-    <View style={styles.crewInforow}>
-    <TouchableOpacity style={styles.crewInfo}
-    onPress={() => navigation.navigate('Detail_Crew')}>
-        <Image style={styles.crewImage} source={require("./icon/illinaire.png")}></Image>
-        <Text style={styles.crewName}>ILLIONAIRE</Text>
-        <Text style={styles.crewIntro}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra quam et odio in sit phasellus. Sit phasellus semper condimentum tellus lacus, sit.</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.crewInfo}>
-        <Image style={styles.crewImage} source={require("./icon/salsa.png")}></Image>
-        <Text style={styles.crewName}>Salsa Crew</Text>
-        <Text style={styles.crewIntro}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra quam et odio in sit phasellus. Sit phasellus semper condimentum tellus lacus, sit.</Text>
-      </TouchableOpacity>
-    </View>
-</SafeAreaView>
+      <ScrollView>
+        <View style = {styles.topHeader}>
+            <Image 
+            style = {{margin: 15, marginRight:90}}
+            source={require("./icon/danshow_logo.png")}></Image>
+            <Icon name="funnel-outline" size={30} style={{padding:10}}></Icon>
+            <Icon name="search-outline" size={30}style={{padding:10}}></Icon>
+            <Icon name="notifications-outline" size={30}style={{padding:10}}></Icon>
+        </View>
+        <View style={styles.resultImageadd}>
+          <Text style={{color:'white', fontWeight:'bold', margin:10}}>Result Image</Text>
+          <View style={{justifyContent:'center', alignItems:'center', marginTop:25}}>
+              <Icon color="white" size={30} name="add-circle-outline"></Icon>
+          </View>
+        </View>
+        <View style={{backgroundColor: '#E9E8E8', width:390, height:4, marginTop:20}}></View>
+        <View style={{marginLeft:20, marginRight:20, marginTop:20}}>
+          <Text style={{fontWeight:'bold', fontSize:15}}>Test Result</Text>
+          <View style={{flexDirection:'row', marginTop:20}}>
+            <Image 
+            style={{width:130, height:130}}
+            source={require("./icon/circle.png")}></Image>
+            <View style={{margin:20}}>
+              <Text style={{fontWeight:'bold', fontSize:30, marginBottom:10}}>Score: 95</Text>
+              <Text style={{fontWeight:'bold', fontSize:20, marginBottom:10}}>It looks like a dancer!</Text>
+              <Text style={{fontWeight:'bold', fontSize:25, marginBottom:10, color:'#1058F4', textAlign:'center'}}>135th place</Text>
+              <TouchableOpacity style={styles.touchOpa}>
+                <Text style={{color:'white', fontWeight: 'bold', fontSize:12}}>Rechallenge?</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+        <View style={{backgroundColor: '#E9E8E8', width:390, height:4, marginTop:20}}></View>
+        <View style={{margin:20}}>
+          <Text style={{fontWeight:'bold', fontSize:15}}>Wrong Result</Text>
+          <View style={{marginTop:30, backgroundColor: '#C4C4C4', width:350, height:150}}></View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 
 }
@@ -65,27 +60,29 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     height:54,
   },
-  searchBox: {
-    backgroundColor:'#F9F8F8', 
-    borderRadius:20, 
-    flexDirection:'row',
-    width: 300,
-    height: 40,
-    margin: 20,
+  resultImageadd: {
+    width:390,
+    height: 150,
+    backgroundColor:'#C4C4C4',
+    marginTop:15,
+    borderRadius:10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  contentRow: {
-    flexDirection: 'row',
-    margin:10
-  },
-  button: {
+  touchOpa: {
+    backgroundColor: "#1058F4",
     alignItems: 'center',
     justifyContent: 'center',
-    width: 100,
-    height: 30,
-    backgroundColor: '#1058F4',
-    borderRadius: 5,
-    elevation: 1,
-    marginTop: 10,
+    borderRadius:5,
+    width:200,
+    height: 25,
+    color: '#FFFFFF',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -94,35 +91,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-  },
-  crewInforow: {
-    flexDirection: 'row',
-    margin:10,
-    paddingTop: 20,
-    justifyContent: 'space-around',
-  },
-  crewImage: {
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    width:158,
-  },
-  crewName: {
-    fontWeight:'bold',
-    fontSize: 15,
-    margin: 5,
-    paddingTop:5,
-  },
-  crewIntro: {
-    margin: 5,
-    paddingTop: 5,
-    fontSize: 10,
-  },
-  crewInfo: {
-    backgroundColor:'white',
-    width: 160,
-    height: 200,
-    borderRadius: 10,
-    borderColor: '#DCDCDC',
-    borderWidth: 2,
   }
 });
