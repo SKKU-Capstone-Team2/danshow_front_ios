@@ -2,12 +2,17 @@
 
 ## Before executing
 
+## In working directory,
+
 ### `npm install`
 
-<br>
+## After npm install, 
 
 ### `cd/ios` && `pod install`
 
+## Came back to working directory,
+
+### `react-native run-ios`
 
 ## Available Scripts
 
