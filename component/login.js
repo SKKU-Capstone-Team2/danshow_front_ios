@@ -15,7 +15,7 @@ class Login extends React.Component{
   componentDidMount() {
     setTimeout( () => SplashScreen.hide(), 1000);
     GoogleSignin.configure({
-      webClientId: '', 
+      webClientId: '110510251327-vodq8nj5ij2mnhtr9fad6uvogm1n5l33.apps.googleusercontent.com', 
       offlineAccess: true, 
       hostedDomain: '', 
       forceConsentPrompt: true, 
