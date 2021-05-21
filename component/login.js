@@ -12,13 +12,9 @@ class Login extends React.Component{
       loggedIn: false
     };
   }
-  
 
   componentDidMount() {
-    setTimeout(() => {
-      SplashScreen.hide()
-    }, 1000);
-
+    setTimeout( () => SplashScreen.hide(), 1000);
     GoogleSignin.configure({
       webClientId: '110510251327-vodq8nj5ij2mnhtr9fad6uvogm1n5l33.apps.googleusercontent.com', 
       offlineAccess: true,
@@ -40,7 +36,6 @@ class Login extends React.Component{
         //   access_token }.then(console.log('complete')))
       })
     } catch (error) {
-      console.log(error.code)
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
       } else if (error.code === statusCodes.IN_PROGRESS) {
