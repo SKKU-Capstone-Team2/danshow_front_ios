@@ -3,6 +3,7 @@ import {SafeAreaView, StyleSheet, Text, TextInput, View, Button, TouchableOpacit
 import Icon from 'react-native-vector-icons/Ionicons';
 import SplashScreen from 'react-native-splash-screen';
 import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-google-signin/google-signin';
+import axios from "axios";
 
 class Login extends React.Component{
   constructor(props) {
@@ -16,7 +17,7 @@ class Login extends React.Component{
     setTimeout( () => SplashScreen.hide(), 1000);
     GoogleSignin.configure({
       webClientId: '110510251327-vodq8nj5ij2mnhtr9fad6uvogm1n5l33.apps.googleusercontent.com', 
-      offlineAccess: true, 
+      offlineAccess: true,
       hostedDomain: '', 
       forceConsentPrompt: true, 
     });
@@ -27,6 +28,13 @@ class Login extends React.Component{
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       this.setState({ userInfo: userInfo, loggedIn: true });
+      const currentUser = GoogleSignin.getTokens().then((res) => {
+        var access_token = res.accessToken;
+        console.log(access_token);
+        
+        // axios.post('url', {
+        //   access_token }.then(console.log('complete')))
+      })
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow

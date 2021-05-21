@@ -4,6 +4,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Mainpage from './main_page';
 import Crew from './crew';
 import Mypage from './mypage_dancer';
+import Mypage1 from './mypage_user';
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import Lecture from "./lecture";
@@ -45,7 +46,7 @@ const MypageStack = createStackNavigator();
 function MypageStackScreen() {
     return (
         <MypageStack.Navigator>
-            <MypageStack.Screen name="Mypage" component={Mypage} options={{headerShown: false}}/>
+            <MypageStack.Screen name="Mypage" component={Mypage1} options={{headerShown: false}}/>
             <MypageStack.Screen name="Cnl" component={Create_new_lecture} options={{headerShown: false}}/>
         </MypageStack.Navigator>
     )
