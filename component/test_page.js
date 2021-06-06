@@ -1,14 +1,8 @@
 import React, { useRef } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image, Linking } from 'react-native';
 import { RNCamera } from "react-native-camera"
-import S3 from "aws-sdk/clients/s3"
-import { Credentials } from "aws-sdk"
-import { v4 as uuid } from "uuid"
-import { RNS3 } from "react-native-s3-upload"
 import AWS from "aws-sdk"
-import Base64Binary from "base64-arraybuffer"
-import * as mime from "react-native-mime-types"
-import * as RNFS from "react-native-fs";
+import Sound from "react-native-sound"
 
 AWS.config.update({
     accessKeyId: 'AKIAYPG3AAD4GNGD555B',
@@ -99,8 +93,26 @@ export default function Test_page({ navigation }) {
     // }).then(res => console.log(res))
     // .catch(err => console.log(err))
   }
+  var sound;
 
   const Submit = async () => {
+    sound = new Sound('https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/audio/fire_audio_abc.mp3', Sound.setCategory("Playback"), (error) => {
+      if (error) {
+        console.log('failed to load the sound', error);
+        return;
+      }
+      // loaded successfully
+      console.log('duration in seconds: ' + sound.getDuration() + 'number of channels: ' + sound.getNumberOfChannels());
+
+      // Play the sound with an onEnd callback
+      sound.play((success) => {
+        if (success) {
+          console.log('successfully finished playing');
+        } else {
+          console.log('playback failed due to audio decoding errors');
+        }
+      });
+    });
     const { uri } = await camera.current.recordAsync()
     const data = new FormData()
     data.append("videoFile", {
@@ -131,6 +143,7 @@ export default function Test_page({ navigation }) {
 
   const Stop = () => {
     camera.current.stopRecording();
+    sound.pause()
     // navigation.navigate('tp_detail')
   }
 
