@@ -1,57 +1,59 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, TextInput, Image, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function Create_crew({navigation}){
   return (
     <SafeAreaView style={styles.container}>
-        <View style = {styles.topHeader}>
-            <Image 
-            style = {{margin: 15, marginRight:90}}
-            source={require("./icon/danshow_logo.png")}></Image>
-            <Icon name="funnel-outline" size={30} style={{padding:10}}></Icon>
-            <Icon name="search-outline" size={30}style={{padding:10}}></Icon>
-            <Icon name="notifications-outline" size={30}style={{padding:10}}></Icon>
-        </View>
-        <View style={styles.crewImageadd}>
-            <Text style={{color:'white', fontWeight:'bold', margin:10}}>Crew Image</Text>
-            <View style={{justifyContent:'center', alignItems:'center', marginTop:25}}>
-                <Icon color="white" size={30} name="add-circle-outline"></Icon>
-            </View>
-        </View>
-        <View style={styles.middleStyle}>
-            <Text style = {{color: "#979EAC", fontSize:15}}>Crew_name</Text>
-            <TextInput style = {styles.textInput}></TextInput>
-            <View style={{flexDirection:'row', paddingTop:30}}>
-                <View style={{flexDirection:'column', marginRight:50}}>
-                    <Text style = {{color: "#979EAC", fontSize:15}}>Crew_title</Text>
-                    <TextInput style = {styles.textInput2}></TextInput>
+        <ScrollView>
+          <View style = {styles.topHeader}>
+              <Image
+              style = {{margin: 15, marginRight:90}}
+              source={require("./icon/danshow_logo.png")}></Image>
+              <Icon name="funnel-outline" size={30} style={{padding:10}}></Icon>
+              <Icon name="search-outline" size={30}style={{padding:10}}></Icon>
+              <Icon name="notifications-outline" size={30}style={{padding:10}}></Icon>
+          </View>
+          <View style={styles.crewImageadd}>
+              <Text style={{color:'white', fontWeight:'bold', margin:10}}>Crew Image</Text>
+              <View style={{justifyContent:'center', alignItems:'center', marginTop:25}}>
+                  <Icon color="white" size={30} name="add-circle-outline"></Icon>
+              </View>
+          </View>
+          <View style={styles.middleStyle}>
+              <Text style = {{color: "#979EAC", fontSize:15}}>Crew_name</Text>
+              <TextInput style = {styles.textInput}></TextInput>
+              <View style={{flexDirection:'row', paddingTop:30}}>
+                  <View style={{flexDirection:'column', marginRight:50}}>
+                      <Text style = {{color: "#979EAC", fontSize:15}}>Crew_title</Text>
+                      <TextInput style = {styles.textInput2}></TextInput>
+                  </View>
+                  <View style={{flexDirection:'column'}}>
+                      <Text style = {{color: "#979EAC", fontSize:15}}>Crew_date</Text>
+                      <TextInput style = {styles.textInput2}></TextInput>
+                  </View>
+              </View>
+              <View style={{flexDirection:'row', paddingTop:30}}>
+                  <View style={{flexDirection:'column', marginRight:50}}>
+                      <Text style = {{color: "#979EAC", fontSize:15}}>Crew_organizer</Text>
+                      <TextInput style = {styles.textInput2}></TextInput>
+                  </View>
+                  <View style={{flexDirection:'column'}}>
+                      <Text style = {{color: "#979EAC", fontSize:15}}>Crew_fee</Text>
+                      <TextInput style = {styles.textInput2}></TextInput>
+                  </View>
+              </View>
+              <Text style = {{color: "#979EAC", fontSize:15, paddingTop:30}}>Crew_organizer_introduction</Text>
+              <TextInput style = {styles.textInput}></TextInput>
+              <Text style = {{color: "#979EAC", fontSize:15, paddingTop:30}}>Crew_introduction</Text>
+              <TextInput style = {styles.textInput}></TextInput>
+          </View>
+          <View style = {styles.buttonStyle}>
+          <TouchableOpacity style={styles.touchOpa} onPress={() => navigation.navigate('Main')}>
+            <Text style={{color:'white', fontWeight: 'bold'}}>Create Crew</Text>
+          </TouchableOpacity>
                 </View>
-                <View style={{flexDirection:'column'}}>
-                    <Text style = {{color: "#979EAC", fontSize:15}}>Crew_date</Text>
-                    <TextInput style = {styles.textInput2}></TextInput>
-                </View>
-            </View>
-            <View style={{flexDirection:'row', paddingTop:30}}>
-                <View style={{flexDirection:'column', marginRight:50}}>
-                    <Text style = {{color: "#979EAC", fontSize:15}}>Crew_organizer</Text>
-                    <TextInput style = {styles.textInput2}></TextInput>
-                </View>
-                <View style={{flexDirection:'column'}}>
-                    <Text style = {{color: "#979EAC", fontSize:15}}>Crew_fee</Text>
-                    <TextInput style = {styles.textInput2}></TextInput>
-                </View>
-            </View>
-            <Text style = {{color: "#979EAC", fontSize:15, paddingTop:30}}>Crew_organizer_introduction</Text>
-            <TextInput style = {styles.textInput}></TextInput>
-            <Text style = {{color: "#979EAC", fontSize:15, paddingTop:30}}>Crew_introduction</Text>
-            <TextInput style = {styles.textInput}></TextInput>
-        </View>
-        <View style = {styles.buttonStyle}>
-        <TouchableOpacity style={styles.touchOpa} onPress={() => navigation.navigate('Main')}>
-          <Text style={{color:'white', fontWeight: 'bold'}}>Create Crew</Text>
-        </TouchableOpacity>
-      </View>
+        </ScrollView>
     </SafeAreaView>
   );
 
