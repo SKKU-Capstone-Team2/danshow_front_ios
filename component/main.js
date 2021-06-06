@@ -34,7 +34,7 @@ const CrewStack = createStackNavigator();
 function CrewStackScreen() {
     return (
         <CrewStack.Navigator>
-            <CrewStack.Screen name="Crew" component={Crew}/>
+            <CrewStack.Screen name="Crew" component={Crew} options={{headerShown: false}}/>
             <CrewStack.Screen name="Create_Crew" component={Create_Crew} options={{headerShown: false}}/>
             <CrewStack.Screen name="Detail_Crew" component={Detail_Crew} options={{headerShown: false}}/>
         </CrewStack.Navigator>
