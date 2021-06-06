@@ -1,6 +1,7 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, Text, View, ScrollView, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import YouTube from 'react-native-youtube';
 
 export default function Lecture({navigation}) {
 
@@ -16,9 +17,19 @@ export default function Lecture({navigation}) {
             <Icon name="notifications-outline" size={30}style={{padding:10}}></Icon>
         </View>
         <View style = {styles.contents}>
-            <Image 
-            source={require("./icon/brave_screen.png")}
-            style={{resizeMode:'cover', width:400, height:180, marginBottom:10, marginTop:10}}></Image>
+          <YouTube
+              videoId="GoBLWClS4ts"
+              apiKey="AIzaSyAq6s_Ni-NBSb6xtYN3Oup5ndKaXoeSSsg"
+              origin="http://www.youtube.com"
+              play={false}
+              fullscreen={false}
+              loop={false}
+              onReady={(e) => console.log('onReady')}
+              onChangeState={(e) => console.log('onChangeState:', e.state)}
+              onChangeQuality={(e) => console.log('onChangeQuality: ', e.quality)}
+              onError={(e) => console.log('onError: ', e.error)}
+              style={{width: '100%', height: 300}}
+              />
             <View style = {styles.contentInfo}>
                 <View>
                     <Text style={{fontWeight:'normal', fontSize:15}}>BraveGirls-Rollin Lecture Video</Text>
