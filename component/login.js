@@ -82,7 +82,7 @@ class Login extends React.Component{
         </TouchableOpacity>
         <Text style = {{textAlign:"center", paddingTop:15, paddingBottom:15, color: "#979EAC", fontWeight:'bold'}}>OR</Text>
         <GoogleSigninButton
-          style={{ width: 300, height: 48 }}
+          style={{ width: 270, height: 48 }}
           size={GoogleSigninButton.Size.Wide}
           color={GoogleSigninButton.Color.Light}
           onPress={this._signIn}
@@ -95,16 +95,13 @@ class Login extends React.Component{
           </View>
       </View>
       <View style = {styles.bottomStyle}>
-        <Button
-          title="Forgot Password?"
-          color= "#979EAC"
-        />
+        <TouchableOpacity>
+          <Text style={{color:"#979EAC"}}>Forgot password?</Text>
+        </TouchableOpacity>
         <View style = {{padding:20}}></View>
-        <Button
-          title="Create Account"
-          color= "#1058F4"
-          onPress={() => this.props.navigation.navigate('Signup')}
-        />
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('Signup')}>
+          <Text style={{color:"#1058F4"}}>Create Account</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
     );
