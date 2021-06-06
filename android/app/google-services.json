@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "630548465343",
+    "project_id": "danshow-a3547",
+    "storage_bucket": "danshow-a3547.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630548465343:android:25b7e6cd48d95eb7d8a80a",
+        "android_client_info": {
+          "package_name": "com.danshowfront_ios"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "630548465343-pc5sv74ikbf9d8mt7tbs2d7vg4d1js5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9KEzsrb7J-j1s9TWn2vawScoiblbCzgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "630548465343-pc5sv74ikbf9d8mt7tbs2d7vg4d1js5i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
