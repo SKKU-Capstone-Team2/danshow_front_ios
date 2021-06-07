@@ -1,17 +1,18 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image, Linking } from 'react-native';
 import { RNCamera } from "react-native-camera"
 import AWS from "aws-sdk"
 import Sound from "react-native-sound"
+import { useEffect } from 'react';
 
 AWS.config.update({
-    accessKeyId: 'AKIAYPG3AAD4GNGD555B',
-    secretAccessKey: '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'
+  accessKeyId: 'AKIAYPG3AAD4GNGD555B',
+  secretAccessKey: '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'
 })
 
 const myBucket = new AWS.S3({
-    params: { Bucket: "nanuda-product-image"},
-    region: "ap-northeast-2",
+  params: { Bucket: "nanuda-product-image" },
+  region: "ap-northeast-2",
 })
 
 // const access = new Credentials({
@@ -44,66 +45,21 @@ export default function Test_page({ navigation }) {
     let res = await camera.save()
     let path = res.uri
     console.log(path)
-  
-    // fs.readFile(file, 'base64', function (err, data) {
-    //   if (err) {
-    //     console.log('fs error', err);
-    //   } else {
-    //     console.log("data : ", data)
-    //     var params = {
-    //       ACL: 'public-read',
-    //       Bucket: "nanuda-product-image",
-    //       Key: 'danshow.mp4',
-    //       Body: data,
-    //       ContentEncoding: 'base64',
-    //       ContentType: 'video/mp4'
-    //     };
-  
-    //     myBucket.putObject(params)
-    //       .on('httpUploadProgress', (evt) => {
-    //       })
-    //       .send((err) => {
-    //         if (err) console.log(err)
-    //       })
-    //   }
-    // });
-  
-  
-    // var putObjectPromise = myBucket.putObject(params).promise();
-  
-    // putObjectPromise.then(function(data) {
-    //   console.log("Successfully uploaded data to " + params.Bucket + "/" + params.Key);
-    // }).catch(commons.handleError);
-  
-    // const base64 = await fs.readFile(file, 'base64')
-    // const contentType = mime.lookup(file)
-    // const fileName = file.name || String(Date.now())
-    // const contentDeposition = 'inline;filename="' + fileName + '"'
-    // const arrayBuffer = Base64Binary.decode(base64)
-  
-    // s3Bucket.createBucket(() => {
-    //   const params = {
-    //     Bucket: "nanuda-product-image",
-    //     Key: fileName,
-    //     Body: arrayBuffer,
-    //     ContentDeposition: contentDeposition,
-    //     ContentType: contentType,
-    //   }
-    //   s3Bucket.upload(params)
-    // }).then(res => console.log(res))
-    // .catch(err => console.log(err))
   }
-  var sound;
 
+  const [start, setStart] = useState(false)
+  const [sound, setSound] = useState(new Sound('https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/audio/fire_audio_abc.mp3', Sound.MAIN_BUNDLE));
   const Submit = async () => {
-    sound = new Sound('https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/audio/fire_audio_abc.mp3', Sound.setCategory("Playback"), (error) => {
-      if (error) {
-        console.log('failed to load the sound', error);
-        return;
-      }
-      // loaded successfully
-      console.log('duration in seconds: ' + sound.getDuration() + 'number of channels: ' + sound.getNumberOfChannels());
-
+    // setSound(new Sound('https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/audio/fire_audio_abc.mp3', Sound.MAIN_BUNDLE, (error) => {
+    //   if (error) {
+    //     console.log('failed to load the sound', error);
+    //     return;
+    //   }
+    //   // loaded successfully
+    //   console.log('duration in seconds: ' + sound.getDuration() + 'number of channels: ' + sound.getNumberOfChannels());
+      
+    // }));
+    setTimeout(() => {
       // Play the sound with an onEnd callback
       sound.play((success) => {
         if (success) {
@@ -112,13 +68,17 @@ export default function Test_page({ navigation }) {
           console.log('playback failed due to audio decoding errors');
         }
       });
-    });
-    const { uri } = await camera.current.recordAsync()
-    const data = new FormData()
-    data.append("videoFile", {
-      name: "danshow.mp4", type: 'video/mp4', uri: uri,
-    })
-    console.log(uri)
+      setStart(false)
+    }, 5000)
+    setStart(true)
+    setTimeout(async () => {
+      const { uri } = await camera.current.recordAsync()
+      const data = new FormData()
+      data.append("videoFile", {
+        name: "danshow.mp4", type: 'video/mp4', uri: uri,
+      })
+      console.log(uri)
+    }, 5000)
     // try {
     //   RNFS.readFile(uri, 'base64')
     //     .then(file => {
@@ -142,25 +102,26 @@ export default function Test_page({ navigation }) {
   }
 
   const Stop = () => {
-    camera.current.stopRecording();
     sound.pause()
-    // navigation.navigate('tp_detail')
+    navigation.navigate('tp_detail')
+    camera.current.stopRecording();
+
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <RNCamera
-          style={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "flex-end"
-          }}
-          ref={camera}
-          type={RNCamera.Constants.Type.back}
-          androidCameraPermissionOptions={{
-            title: 'Permission to use camera',
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "flex-end"
+        }}
+        ref={camera}
+        type={RNCamera.Constants.Type.back}
+        androidCameraPermissionOptions={{
+          title: 'Permission to use camera',
           message: 'We need your permission to use your camera',
           buttonPositive: 'Ok',
           buttonNegative: 'Cancel',
@@ -175,35 +136,55 @@ export default function Test_page({ navigation }) {
         {({ camera, status, recordAudioPermissionStatus }) => {
           if (status !== 'READY') return <PendingView />;
           return (
-            <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-              <TouchableOpacity onPress={Submit} style={{
-                width: 150,
-                backgroundColor: '#1058F4',
-                borderRadius: 5,
-                padding: 15,
-                paddingHorizontal: 20,
-                alignSelf: 'center',
-                margin: 20,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}>
-                <Text style={{ fontSize: 14, color: '#FFFFFF', fontWeight: "bold" }}> Start </Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={Stop} style={{
-                width: 150,
-                backgroundColor: '#1058F4',
-                borderRadius: 5,
-                padding: 15,
-                paddingHorizontal: 20,
-                alignSelf: 'center',
-                margin: 20,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center"
-              }}>
-                <Text style={{ fontSize: 14, color: '#FFFFFF', fontWeight: "bold" }}> End </Text>
-              </TouchableOpacity>
+            <View style={{
+              flex: 1
+            }}>
+              {start ?
+                <View style={{
+                  display: "flex",
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}>
+                  <Text style={{
+                    fontSize: 36,
+                    color: "#1058F4",
+                    fontWeight: "bold"
+                  }}>5초 뒤 시작됩니다.</Text>
+                </View>
+                :
+                <View style={{ flex: 1 }}></View>
+              }
+              <View style={{ flex: 0, display: "flex", flexDirection: 'row', justifyContent: 'center' }}>
+                <TouchableOpacity onPress={Submit} style={{
+                  width: 150,
+                  backgroundColor: '#1058F4',
+                  borderRadius: 5,
+                  padding: 15,
+                  paddingHorizontal: 20,
+                  alignSelf: 'center',
+                  margin: 20,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}>
+                  <Text style={{ fontSize: 14, color: '#FFFFFF', fontWeight: "bold" }}> Start </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={Stop} style={{
+                  width: 150,
+                  backgroundColor: '#1058F4',
+                  borderRadius: 5,
+                  padding: 15,
+                  paddingHorizontal: 20,
+                  alignSelf: 'center',
+                  margin: 20,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}>
+                  <Text style={{ fontSize: 14, color: '#FFFFFF', fontWeight: "bold" }}> End </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           );
         }}
