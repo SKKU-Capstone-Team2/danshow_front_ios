@@ -1,8 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, StyleSheet, Text, View, ScrollView ,Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function Mainpage({navigation}) {
+  useEffect(async() => {
+    await fetch("http://3.37.74.8:8080/api/v1/videos/main", {
+      method: "GET",
+      headers: {
+        "X-AUTH-TOKEN": "",
+      },
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+  })
 
   return (
     <SafeAreaView style={styles.container}>

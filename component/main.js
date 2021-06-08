@@ -18,9 +18,10 @@ import Create_new_lecture from "./create_new_lecture";
 const HomeStack = createStackNavigator();
 
 function HomeStackScreen() {
+
     return (
         <HomeStack.Navigator>
-            <HomeStack.Screen name="MainPage" component={Mainpage} options={{headerShown: false}} />
+            <HomeStack.Screen name="MainPage" component={Mainpage} options={{headerShown: false}}/>
             <HomeStack.Screen name="Lecture" component={Lecture} options={{headerShown: false}}/>
             <HomeStack.Screen name="Cover" component={Cover} options={{headerShown: false}}/>
             <HomeStack.Screen name="test_page" component={Test_page} options={{headerShown: false}}/>
@@ -54,7 +55,10 @@ function MypageStackScreen() {
 
 const Tab = createBottomTabNavigator();
 
-export default function Main({ navigation }) {
+export default function Main({ navigation, route }) {
+    // const { token } = route.params;
+    console.log(route.params);
+    // console.log(token);
   return(
     <Tab.Navigator
             screenOptions={({ route }) => ({
