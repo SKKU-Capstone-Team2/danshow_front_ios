@@ -30,12 +30,12 @@ function Login({ navigation }) {
     })
       .then(res => res.text())
       .then(res => {
-        console.log(res)
+        // console.log(res)
         navigation.navigate('Main', {
           token: res
         })
       })
-      .catch(err => console.log(err))
+      // .catch(err => console.log(err))
   }
   return (
     <SafeAreaView style={styles.container}>

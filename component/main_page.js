@@ -1,23 +1,31 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, Text, View, ScrollView ,Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
 
-export default function Mainpage({navigation}) {
-  useEffect(async() => {
-    await fetch("http://3.37.74.8:8080/api/v1/videos/main", {
-      method: "GET",
+export default function Mainpage({navigation, pToken}) {
+  let paramData = '';
+  const authToken = pToken;
+  console.log(authToken);
+
+  useEffect(() => {
+    axios.get("http://3.37.74.8:8080/api/v1/videos/main", {
       headers: {
-        "X-AUTH-TOKEN": "",
+        "X-AUTH-TOKEN": `eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHa2RsQG5hdmVyLmNvbSIsInJvbGUiOiJST0xFX01FTUJFUiIsImlhdCI6MTYyMzE3MjQ0MSwiZXhwIjoxNjIzMTkwNDQxfQ.ngSPaDUkb5SL6p7qD05dsW4AW_NcT69_ZEKEMXLiiys`,
       },
     })
-    .then(function (response) {
-      console.log(response);
+    .then(function (res) {
+      paramData = res.data.videoThumbnailList[0];
+      // console.log(paramData.id);
+      // console.log(paramData.image_url)
     })
   })
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
+        {/* <Text>{paramData.id}</Text>
+        <Text>{paramData.</Text> */}
         <View style = {styles.topHeader}>
             <Image 
             style = {{margin: 15, marginRight:90}}

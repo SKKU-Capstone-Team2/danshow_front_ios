@@ -1,6 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Mainpage from './main_page';
 import Crew from './crew';
 import Mypage from './mypage_dancer';
@@ -17,11 +17,10 @@ import Create_new_lecture from "./create_new_lecture";
 
 const HomeStack = createStackNavigator();
 
-function HomeStackScreen() {
-
+function HomeStackScreen({token}) {
     return (
         <HomeStack.Navigator>
-            <HomeStack.Screen name="MainPage" component={Mainpage} options={{headerShown: false}}/>
+            <HomeStack.Screen name="MainPage" options={{headerShown: false}} children={() => <Mainpage pToken={token} />}/>
             <HomeStack.Screen name="Lecture" component={Lecture} options={{headerShown: false}}/>
             <HomeStack.Screen name="Cover" component={Cover} options={{headerShown: false}}/>
             <HomeStack.Screen name="test_page" component={Test_page} options={{headerShown: false}}/>
@@ -32,7 +31,8 @@ function HomeStackScreen() {
 
 const CrewStack = createStackNavigator();
 
-function CrewStackScreen() {
+function CrewStackScreen({token}) {
+    console.log(token)
     return (
         <CrewStack.Navigator>
             <CrewStack.Screen name="Crew" component={Crew} options={{headerShown: false}}/>
@@ -44,7 +44,8 @@ function CrewStackScreen() {
 
 const MypageStack = createStackNavigator();
 
-function MypageStackScreen() {
+function MypageStackScreen({token}) {
+    console.log(token)
     return (
         <MypageStack.Navigator>
             <MypageStack.Screen name="Mypage" component={Mypage1} options={{headerShown: false}}/>
@@ -56,9 +57,6 @@ function MypageStackScreen() {
 const Tab = createBottomTabNavigator();
 
 export default function Main({ navigation, route }) {
-    // const { token } = route.params;
-    console.log(route.params);
-    // console.log(token);
   return(
     <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -85,10 +83,9 @@ export default function Main({ navigation, route }) {
                 inactiveTintColor: '#000000',
             }}
         >
-            <Tab.Screen name="Mainpage" component={HomeStackScreen} />
-            <Tab.Screen name="Crew" component={CrewStackScreen} />
-            <Tab.Screen name="Mypage" component={MypageStackScreen} />
+            <Tab.Screen name="Mainpage" children={() => <HomeStackScreen token={route.params?.token} />} />
+            <Tab.Screen name="Crew" children={() => <CrewStackScreen token={route.params?.token} />} />
+            <Tab.Screen name="Mypage" children={() => <MypageStackScreen token={route.params?.token} />} />
     </Tab.Navigator>
   );
 }
-
