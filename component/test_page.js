@@ -6,6 +6,7 @@ import Sound from "react-native-sound"
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as RNFS from "react-native-fs"
+import test from "./test.json"
 
 AWS.config.update({
   accessKeyId: 'AKIAYPG3AAD4GNGD555B',
@@ -79,19 +80,7 @@ export default function Test_page({ navigation }) {
         type: 'video/mp4', 
         uri: uri
       })
-      data.append("post", new Blob([JSON.stringify({
-        "title": "hojun test video!!",
-        "description": "haha",
-        "userId": "lol",
-        "difficulty": "20",
-        "genre": "pop",
-        "gender": "male",
-        "length": "120",
-        "score": "90",
-        "postType": "TEST"
-      })], {
-        type: "application/json"
-      }))
+      data.append("post", test)
       console.log(data)
       console.log(uri)
       // RNFS.readFile(uri, 'base64')
@@ -126,17 +115,17 @@ export default function Test_page({ navigation }) {
         // .catch((err) => {
         //   console.log(err)
         // })
-        fetch("http://3.37.74.8:8080/api/v1/member-test/2", {
+        fetch("http://3.37.74.8:8080/api/v1/file", {
           method: "POST",
           headers: {
             'X-AUTH-TOKEN': `${authToken}`,
-            'Content-Type': 'application/json'
+            'Content-Type': 'multipart/form-data',
           },
-          body: JSON.stringify({userTestVideo: data}),
+          body: data,
         })
           .then(res => {
             console.log(res)
-            res.json()
+            res.text()
           })
           .then(res => console.log(res))
           .catch(err => console.log(err))
