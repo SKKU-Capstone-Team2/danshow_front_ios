@@ -31,6 +31,7 @@ function Login({ navigation }) {
     })
       .then(res => res.text())
       .then(res => {
+        console.log(res)
         navigation.navigate('Main');
         AsyncStorage.setItem('authToken', res, () => { 
         });
