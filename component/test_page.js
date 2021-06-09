@@ -1,10 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image, Linking } from 'react-native';
 import { RNCamera } from "react-native-camera"
 import AWS from "aws-sdk"
 import Sound from "react-native-sound"
 import AsyncStorage from '@react-native-community/async-storage';
-import test from "./test.json"
 import * as RNFS from 'react-native-fs';
 
 AWS.config.update({
@@ -32,14 +31,14 @@ const PendingView = () => (
 
 export default function Test_page({ navigation }) {
   const camera = useRef(null);
-
-  console.log(test)
-  var normalizeFilePath = (path) => (path.startsWith('file://') ? path.slice(7) : path);
   console.log(RNFS.DocumentDirectoryPath)
 
   const [start, setStart] = useState(false)
   const [sound, setSound] = useState(new Sound('https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/audio/c695a1ee-0243-4bc8-9ddc-d19c94357859-BTS+-+Butter_audio.mp3', Sound.MAIN_BUNDLE));
+  
+  const [submitStart, setSubmitStart] = useState(false)
   const Submit = async () => {
+    setSubmitStart(true)
     setStart(false)
     var path = RNFS.DocumentDirectoryPath + '/test.json';
     RNFS.writeFile(path, `{"title" : "hojun test video!!",
@@ -110,6 +109,14 @@ export default function Test_page({ navigation }) {
     camera.current.stopRecording();
     navigation.navigate('tp_detail')
   }
+
+  useEffect(() => {
+    if (submitStart) {
+      setTimeout(() => {
+        Stop()
+      }, 10000)
+    }
+  }, [submitStart])
 
   return (
     <SafeAreaView style={styles.container}>
