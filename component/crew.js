@@ -1,53 +1,55 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function Crew({navigation}){
   return (
-    <SafeAreaView style={styles.container}>
-    <View style = {styles.topHeader}>
-        <Image 
-        style = {{margin: 15, marginRight:90}}
-        source={require("./icon/danshow_logo.png")}></Image>
-        <Icon name="funnel-outline" size={30} style={{padding:10}}></Icon>
-        <Icon name="search-outline" size={30}style={{padding:10}}></Icon>
-        <Icon name="notifications-outline" size={30}style={{padding:10}}></Icon>
-    </View>
-    <View style={styles.searchBox}>
-      <Icon name="search-outline" size={20}style={{padding:10, color:'#C4C4C4'}}></Icon>
-      <Text style={{marginTop:14, color:'#C4C4C4'}}>Crew Name, Crew Captain Search</Text>
-    </View>
-    <View style = {styles.contentRow}>
-        <Text style = {{padding:10, fontSize:18, fontWeight:'bold', marginRight:100}}>All Crew Views</Text>
-        <TouchableOpacity
-        onPress={() => navigation.navigate('Create_Crew')}
-        style={styles.button}><Text style={{color:'white', fontWeight:'bold'}}>Create Crew</Text></TouchableOpacity>
-    </View>
-    <View style={styles.crewInforow}>
-      <TouchableOpacity style={styles.crewInfo}>
-        <Image style={styles.crewImage} source={require("./icon/dickies.png")}></Image>
-        <Text style={styles.crewName}>Dickids Crew</Text>
-        <Text style={styles.crewIntro}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra quam et odio in sit phasellus. Sit phasellus semper condimentum tellus lacus, sit.</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.crewInfo}>
-        <Image style={styles.crewImage} source={require("./icon/lorem.png")}></Image>
-        <Text style={styles.crewName}>Lorem Crew</Text>
-        <Text style={styles.crewIntro}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra quam et odio in sit phasellus. Sit phasellus semper condimentum tellus lacus, sit.</Text>
-      </TouchableOpacity>
-    </View>
-    <View style={styles.crewInforow}>
-    <TouchableOpacity style={styles.crewInfo}
-    onPress={() => navigation.navigate('Detail_Crew')}>
-        <Image style={styles.crewImage} source={require("./icon/illinaire.png")}></Image>
-        <Text style={styles.crewName}>ILLIONAIRE</Text>
-        <Text style={styles.crewIntro}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra quam et odio in sit phasellus. Sit phasellus semper condimentum tellus lacus, sit.</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.crewInfo}>
-        <Image style={styles.crewImage} source={require("./icon/salsa.png")}></Image>
-        <Text style={styles.crewName}>Salsa Crew</Text>
-        <Text style={styles.crewIntro}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra quam et odio in sit phasellus. Sit phasellus semper condimentum tellus lacus, sit.</Text>
-      </TouchableOpacity>
-    </View>
+  <SafeAreaView style={styles.container}>
+    <ScrollView>
+      <View style = {styles.topHeader}>
+          <Image
+          style = {{margin: 15, marginRight:90}}
+          source={require("./icon/danshow_logo.png")}></Image>
+          <Icon name="funnel-outline" size={30} style={{padding:10}}></Icon>
+          <Icon name="search-outline" size={30}style={{padding:10}}></Icon>
+          <Icon name="notifications-outline" size={30}style={{padding:10}}></Icon>
+      </View>
+      <View style={styles.searchBox}>
+        <Icon name="search-outline" size={20}style={{padding:10, color:'#C4C4C4'}}></Icon>
+        <Text style={{marginTop:14, color:'#C4C4C4'}}>Crew Name, Crew Captain Search</Text>
+      </View>
+      <View style = {styles.contentRow}>
+          <Text style = {{padding:10, fontSize:18, fontWeight:'bold', marginRight:100}}>All Crew Views</Text>
+          <TouchableOpacity
+          onPress={() => navigation.navigate('Create_Crew')}
+          style={styles.button}><Text style={{color:'white', fontWeight:'bold'}}>Create Crew</Text></TouchableOpacity>
+      </View>
+      <View style={styles.crewInforow}>
+        <TouchableOpacity style={styles.crewInfo}>
+          <Image style={styles.crewImage} source={require("./icon/dickies.png")}></Image>
+          <Text style={styles.crewName}>Dickids Crew</Text>
+          <Text style={styles.crewIntro}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra quam et odio in sit phasellus. Sit phasellus semper condimentum tellus lacus, sit.</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.crewInfo}>
+          <Image style={styles.crewImage} source={require("./icon/lorem.png")}></Image>
+          <Text style={styles.crewName}>Lorem Crew</Text>
+          <Text style={styles.crewIntro}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra quam et odio in sit phasellus. Sit phasellus semper condimentum tellus lacus, sit.</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.crewInforow}>
+      <TouchableOpacity style={styles.crewInfo}
+      onPress={() => navigation.navigate('Detail_Crew')}>
+          <Image style={styles.crewImage} source={require("./icon/illinaire.png")}></Image>
+          <Text style={styles.crewName}>ILLIONAIRE</Text>
+          <Text style={styles.crewIntro}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra quam et odio in sit phasellus. Sit phasellus semper condimentum tellus lacus, sit.</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.crewInfo}>
+          <Image style={styles.crewImage} source={require("./icon/salsa.png")}></Image>
+          <Text style={styles.crewName}>Salsa Crew</Text>
+          <Text style={styles.crewIntro}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra quam et odio in sit phasellus. Sit phasellus semper condimentum tellus lacus, sit.</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
 </SafeAreaView>
   );
 

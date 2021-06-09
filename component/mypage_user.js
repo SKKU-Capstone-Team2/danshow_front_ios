@@ -1,8 +1,35 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {SafeAreaView, StyleSheet, Text, View, ScrollView, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Mypage({navigation}) {
+
+  const [testData, settestData] = useState({
+    filePath : "",
+    score: 0,
+    title: ""
+  });
+
+  const getInfo = () => {
+    AsyncStorage.getItem('authToken', (err, result) => {
+      const authToken = result;
+      axios.get("http://3.37.74.8:8080/api/v1/videos/test", {
+        headers: {
+          "X-AUTH-TOKEN": `${authToken}`,
+        },
+      })
+      .then(function (res) {
+        console.log(res.data);
+        settestData(res.data);
+      })          
+   });
+  }
+
+  useEffect(() => {
+    getInfo();
+  }, [])
 
   return (
       <SafeAreaView style={styles.container}>
@@ -114,6 +141,10 @@ Subscribe`}</Text>
                   <Text style={styles.crewIntro}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra quam et odio in sit phasellus. Sit phasellus semper condimentum tellus lacus, sit.</Text>
                 </TouchableOpacity>
               </View>
+            </View>
+            <View style={{backgroundColor:'#E9E8E8', height:2}}></View>
+            <View style={{margin:20}}>
+              <Text style={{fontWeight:'bold', fontSize:15}}>Test list</Text>
             </View>
         </ScrollView>
   </SafeAreaView>

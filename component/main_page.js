@@ -25,6 +25,8 @@ export default function Mainpage({navigation}) {
     getInfo();
   }, [])
 
+  console.log(paramData);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>

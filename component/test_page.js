@@ -4,6 +4,7 @@ import { RNCamera } from "react-native-camera"
 import AWS from "aws-sdk"
 import Sound from "react-native-sound"
 import { useEffect } from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 
 AWS.config.update({
   accessKeyId: 'AKIAYPG3AAD4GNGD555B',
@@ -79,6 +80,18 @@ export default function Test_page({ navigation }) {
       })
       console.log(uri)
     }, 5000)
+    AsyncStorage.getItem('authToken', (err, result) => {
+      const authToken = result;
+    fetch("http://3.37.74.8:8080/api/v1/member-test/2", {
+      method: "POST",
+      headers: {
+        'id': 2,
+        'userTestVideo': "",
+        'X-AUTH-TOKEN': `${authToken}`,
+      },
+      body: data
+    })
+  })
     // try {
     //   RNFS.readFile(uri, 'base64')
     //     .then(file => {
