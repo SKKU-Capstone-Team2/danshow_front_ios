@@ -26,7 +26,7 @@ export default function Tp_detail({navigation}) {
 
   useEffect(() => {
     getvideoInfo();
-  }, [])
+  }, [paramvideoData])
 
   return (
     <SafeAreaView style={styles.container}>

@@ -108,7 +108,7 @@ export default function Test_page({ navigation }) {
     sound.pause()
     camera.current.stopRecording();
     setSubmitStart(false)
-    navigation.navigate('tp_detail')
+    navigation.goBack()
   }
 
   useEffect(() => {
