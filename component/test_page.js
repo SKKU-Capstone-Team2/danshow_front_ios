@@ -5,6 +5,7 @@ import AWS from "aws-sdk"
 import Sound from "react-native-sound"
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
+import * as RNFS from "react-native-fs"
 
 AWS.config.update({
   accessKeyId: 'AKIAYPG3AAD4GNGD555B',
@@ -58,40 +59,44 @@ export default function Test_page({ navigation }) {
     //   }
     //   // loaded successfully
     //   console.log('duration in seconds: ' + sound.getDuration() + 'number of channels: ' + sound.getNumberOfChannels());
-      
+
     // }));
-    setTimeout(() => {
-      // Play the sound with an onEnd callback
-      sound.play((success) => {
-        if (success) {
-          console.log('successfully finished playing');
-        } else {
-          console.log('playback failed due to audio decoding errors');
-        }
-      });
-      setStart(false)
-    }, 5000)
-    setStart(true)
-    setTimeout(async () => {
-      const { uri } = await camera.current.recordAsync()
-      const data = new FormData()
-      data.append("videoFile", {
-        name: "danshow.mp4", type: 'video/mp4', uri: uri,
-      })
-      console.log(uri)
-    }, 5000)
-    AsyncStorage.getItem('authToken', (err, result) => {
-      const authToken = result;
-    fetch("http://3.37.74.8:8080/api/v1/member-test/2", {
-      method: "POST",
-      headers: {
-        'id': 2,
-        'userTestVideo': "",
-        'X-AUTH-TOKEN': `${authToken}`,
-      },
-      body: data
+    // Play the sound with an onEnd callback
+    setStart(false)
+    sound.play((success) => {
+      if (success) {
+        console.log('successfully finished playing');
+      } else {
+        console.log('playback failed due to audio decoding errors');
+      }
+    });
+
+    const data = new FormData()
+    const { uri } = await camera.current.recordAsync()
+    data.append("video", {
+      name: "danshow.mp4", type: 'video/mp4', uri: uri,
     })
-  })
+    console.log(uri)
+    RNFS.readFile(uri, 'base64')
+      .then(file => {
+        console.log(file)
+        AsyncStorage.getItem('authToken', (err, result) => {
+          const authToken = result;
+          fetch("http://3.37.74.8:8080/api/v1/member-test/2", {
+            method: "POST",
+            headers: {
+              'X-AUTH-TOKEN': `${authToken}`,
+              'Content-Type': 'multipart/form-data'
+            },
+            body: file,
+          })
+            .then(res => res.json())
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+        })
+      })
+      .catch(err => console.log(err))
+    
     // try {
     //   RNFS.readFile(uri, 'base64')
     //     .then(file => {
@@ -116,9 +121,8 @@ export default function Test_page({ navigation }) {
 
   const Stop = () => {
     sound.pause()
-    navigation.navigate('tp_detail')
     camera.current.stopRecording();
-
+    navigation.navigate('tp_detail')
   }
 
   return (
@@ -169,7 +173,12 @@ export default function Test_page({ navigation }) {
                 <View style={{ flex: 1 }}></View>
               }
               <View style={{ flex: 0, display: "flex", flexDirection: 'row', justifyContent: 'center' }}>
-                <TouchableOpacity onPress={Submit} style={{
+                <TouchableOpacity onPress={() => {
+                  setStart(true)
+                  setTimeout(() => {
+                    Submit()
+                  }, 5000)
+                }} style={{
                   width: 150,
                   backgroundColor: '#1058F4',
                   borderRadius: 5,
