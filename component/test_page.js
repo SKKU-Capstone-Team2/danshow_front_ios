@@ -3,10 +3,9 @@ import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image, Linking 
 import { RNCamera } from "react-native-camera"
 import AWS from "aws-sdk"
 import Sound from "react-native-sound"
-import { useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import * as RNFS from "react-native-fs"
 import test from "./test.json"
+import * as RNFS from 'react-native-fs';
 
 AWS.config.update({
   accessKeyId: 'AKIAYPG3AAD4GNGD555B',
@@ -17,17 +16,6 @@ const myBucket = new AWS.S3({
   params: { Bucket: "nanuda-product-image" },
   region: "ap-northeast-2",
 })
-
-// const access = new Credentials({
-//   accessKeyId: 'AKIAYXZAHY2OUUO4ZEWS',
-//   secretAccessKey: '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',
-// });
-
-// const s3 = new S3({
-//   credentials: access,
-//   region: 'ap-northeast-2', //"us-west-2"
-//   signatureVersion: "v4",
-// });
 
 const PendingView = () => (
   <View
@@ -44,26 +32,32 @@ const PendingView = () => (
 
 export default function Test_page({ navigation }) {
   const camera = useRef(null);
-  const uploadVideo = async (file) => {
-    let res = await camera.save()
-    let path = res.uri
-    console.log(path)
-  }
+
+  console.log(test)
+  var normalizeFilePath = (path) => (path.startsWith('file://') ? path.slice(7) : path);
+  console.log(RNFS.DocumentDirectoryPath)
 
   const [start, setStart] = useState(false)
-  const [sound, setSound] = useState(new Sound('https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/audio/fire_audio_abc.mp3', Sound.MAIN_BUNDLE));
+  const [sound, setSound] = useState(new Sound('https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/audio/c695a1ee-0243-4bc8-9ddc-d19c94357859-BTS+-+Butter_audio.mp3', Sound.MAIN_BUNDLE));
   const Submit = async () => {
-    // setSound(new Sound('https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/audio/fire_audio_abc.mp3', Sound.MAIN_BUNDLE, (error) => {
-    //   if (error) {
-    //     console.log('failed to load the sound', error);
-    //     return;
-    //   }
-    //   // loaded successfully
-    //   console.log('duration in seconds: ' + sound.getDuration() + 'number of channels: ' + sound.getNumberOfChannels());
-
-    // }));
-    // Play the sound with an onEnd callback
     setStart(false)
+    var path = RNFS.DocumentDirectoryPath + '/test.json';
+    RNFS.writeFile(path, `{"title" : "hojun test video!!",
+      "description" : "haha",
+      "userId" : "lol",
+      "difficulty" : "123",
+      "genre" : "pop",
+      "gender" : "male",
+      "length" : "120",
+      "score" : "90",
+      "postType" : "TEST"
+      }`, 'utf8')
+      .then((success) => {
+        console.log('FILE WRITTEN!');
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
     sound.play((success) => {
       if (success) {
         console.log('successfully finished playing');
@@ -76,86 +70,39 @@ export default function Test_page({ navigation }) {
     try {
       const data = new FormData()
       data.append("video", {
-        name: "danshow.mp4", 
-        type: 'video/mp4', 
+        name: "danshow.mp4",
+        type: 'video/mp4',
         uri: uri
       })
-      data.append("post", test)
-      console.log(data)
+      data.append("post", {
+        name: "test.json",
+        type: "application/json",
+        uri: 'file://' + path
+      })
       console.log(uri)
-      // RNFS.readFile(uri, 'base64')
-      //   .then(file => {
-      //     console.log(file)
-      AsyncStorage.getItem('authToken', (err, result) => {
+      AsyncStorage.getItem('authToken', async (err, result) => {
         const authToken = result;
-        // RNFetchBlob.fetch('POST', 'http://3.37.74.8:8080/api/v1/member-test/2', {
-        //   'Content-Type': 'multipart/form-data',
-        //   'X-AUTH-TOKEN': `${authToken}`,
-        //   "Accept":"multipart/form-data",
-        // }, [
-        //   // element with property `filename` will be transformed into `file` in form data
-        //   { name: 'video', filename: 'video/mp4', data: RNFetchBlob.wrap(uri) },
-        //   {
-        //     name: 'info', data: JSON.stringify({
-        //       "title": "hojun test video!!",
-        //       "description": "haha",
-        //       "userId": "lol",
-        //       "difficulty": "20",
-        //       "genre": "pop",
-        //       "gender": "male",
-        //       "length": "120",
-        //       "score": "90",
-        //       "postType": "TEST"
-        //     })
-        //   },
-        // ]).then(resp => {
-        //   console.log(resp)
-        //   resp.text()
-        // }).then(res => console.log(res))
-        // .catch((err) => {
-        //   console.log(err)
-        // })
-        fetch("http://3.37.74.8:8080/api/v1/file", {
+        console.log(authToken)
+        await fetch("http://3.37.74.8:8080/api/v1/file", {
           method: "POST",
           headers: {
             'X-AUTH-TOKEN': `${authToken}`,
-            'Content-Type': 'multipart/form-data',
+            // 'Content-Type': 'multipart/form-data',
           },
           body: data,
         })
           .then(res => {
             console.log(res)
-            res.text()
+            res.json()
           })
           .then(res => console.log(res))
           .catch(err => console.log(err))
       })
-        // })
-        // .catch(err => console.log(err))
+      // })
+      // .catch(err => console.log(err))
     } catch (err) {
       console.log(err)
     }
-
-    // try {
-    //   RNFS.readFile(uri, 'base64')
-    //     .then(file => {
-    //       console.log(file)
-    //       var param = {
-    //         ACL: 'public-read',
-    //         Bucket: "nanuda-product-image",
-    //         Key: "danshow.mp4",
-    //         Body: file,
-    //         ContentType: 'multipart/form-data'
-    //       };
-    //       myBucket.putObject(param)
-    //         .on("httpUploadProgress")
-    //         .send(err => console.log(err))
-    //     })
-    //     .catch(err => console.log(err));
-
-    // } catch (e) {
-    //   console.log(e)
-    // }
   }
 
   const Stop = () => {
@@ -176,6 +123,7 @@ export default function Test_page({ navigation }) {
         }}
         ref={camera}
         type={RNCamera.Constants.Type.back}
+        flashMode={RNCamera.Constants.FlashMode.on}
         androidCameraPermissionOptions={{
           title: 'Permission to use camera',
           message: 'We need your permission to use your camera',
