@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import SplashScreen from 'react-native-splash-screen';
-import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-google-signin/google-signin';
-import axios from "axios";
+// import { GoogleSignin, GoogleSigninButton, statusCodes } from '@react-native-google-signin/google-signin';
+// import axios from "axios";
+import AsyncStorage from '@react-native-community/async-storage';
 
 function Login({ navigation }) {
   useEffect(() => {
@@ -31,9 +32,10 @@ function Login({ navigation }) {
       .then(res => res.text())
       .then(res => {
         // console.log(res)
-        navigation.navigate('Main', {
-          token: res
-        })
+        navigation.navigate('Main');
+        AsyncStorage.setItem('authToken', res, () => { 
+        });
+        
       })
       // .catch(err => console.log(err))
   }

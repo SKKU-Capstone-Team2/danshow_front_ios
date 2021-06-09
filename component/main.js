@@ -17,10 +17,10 @@ import Create_new_lecture from "./create_new_lecture";
 
 const HomeStack = createStackNavigator();
 
-function HomeStackScreen({token}) {
+function HomeStackScreen() {
     return (
         <HomeStack.Navigator>
-            <HomeStack.Screen name="MainPage" options={{headerShown: false}} children={() => <Mainpage pToken={token} />}/>
+            <HomeStack.Screen name="MainPage" component={Mainpage} options={{headerShown: false}}/>
             <HomeStack.Screen name="Lecture" component={Lecture} options={{headerShown: false}}/>
             <HomeStack.Screen name="Cover" component={Cover} options={{headerShown: false}}/>
             <HomeStack.Screen name="test_page" component={Test_page} options={{headerShown: false}}/>
@@ -31,8 +31,7 @@ function HomeStackScreen({token}) {
 
 const CrewStack = createStackNavigator();
 
-function CrewStackScreen({token}) {
-    console.log(token)
+function CrewStackScreen() {
     return (
         <CrewStack.Navigator>
             <CrewStack.Screen name="Crew" component={Crew} options={{headerShown: false}}/>
@@ -44,8 +43,7 @@ function CrewStackScreen({token}) {
 
 const MypageStack = createStackNavigator();
 
-function MypageStackScreen({token}) {
-    console.log(token)
+function MypageStackScreen() {
     return (
         <MypageStack.Navigator>
             <MypageStack.Screen name="Mypage" component={Mypage1} options={{headerShown: false}}/>
@@ -56,7 +54,7 @@ function MypageStackScreen({token}) {
 
 const Tab = createBottomTabNavigator();
 
-export default function Main({ navigation, route }) {
+export default function Main({ navigation }) {
   return(
     <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -83,9 +81,9 @@ export default function Main({ navigation, route }) {
                 inactiveTintColor: '#000000',
             }}
         >
-            <Tab.Screen name="Mainpage" children={() => <HomeStackScreen token={route.params?.token} />} />
-            <Tab.Screen name="Crew" children={() => <CrewStackScreen token={route.params?.token} />} />
-            <Tab.Screen name="Mypage" children={() => <MypageStackScreen token={route.params?.token} />} />
+            <Tab.Screen name="Mainpage" component={HomeStackScreen} />
+            <Tab.Screen name="Crew" component={CrewStackScreen}/>
+            <Tab.Screen name="Mypage" component={MypageStackScreen}/>
     </Tab.Navigator>
   );
 }
