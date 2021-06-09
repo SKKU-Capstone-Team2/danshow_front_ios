@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image, Linking } from 'react-native';
-import { RNCamera } from "react-native-camera";
-import AWS from "aws-sdk";
-import Sound from "react-native-sound";
+import { RNCamera } from "react-native-camera"
+import AWS from "aws-sdk"
+import Sound from "react-native-sound"
+import { useEffect } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
-import axios from 'axios';
+import * as RNFS from "react-native-fs"
+import test from "./test.json"
 
 AWS.config.update({
   accessKeyId: 'AKIAYPG3AAD4GNGD555B',
@@ -51,6 +53,16 @@ export default function Test_page({ navigation }) {
   const [start, setStart] = useState(false)
   const [sound, setSound] = useState(new Sound('https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/audio/fire_audio_abc.mp3', Sound.MAIN_BUNDLE));
   const Submit = async () => {
+    // setSound(new Sound('https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/audio/fire_audio_abc.mp3', Sound.MAIN_BUNDLE, (error) => {
+    //   if (error) {
+    //     console.log('failed to load the sound', error);
+    //     return;
+    //   }
+    //   // loaded successfully
+    //   console.log('duration in seconds: ' + sound.getDuration() + 'number of channels: ' + sound.getNumberOfChannels());
+
+    // }));
+    // Play the sound with an onEnd callback
     setStart(false)
     sound.play((success) => {
       if (success) {
@@ -62,35 +74,52 @@ export default function Test_page({ navigation }) {
     const { uri } = await camera.current.recordAsync()
 
     try {
-      let data = new FormData()
+      const data = new FormData()
       data.append("video", {
         name: "danshow.mp4", 
         type: 'video/mp4', 
         uri: uri
       })
-      console.log(uri);
-      data.append("post", new Blob([JSON.stringify({
-        "title": "hojun test video!!",
-        "description": "haha",
-        "userId": "lol",
-        "difficulty": "20",
-        "genre": "pop",
-        "gender": "male",
-        "length": "120",
-        "score": "90",
-        "postType": "TEST"
-      })], {
-        type: "application/json"
-      }))
-      console.log('not in hi' + data);
-      console.log('not in hi' + uri);
-
+      data.append("post", test)
+      console.log(data)
+      console.log(uri)
+      // RNFS.readFile(uri, 'base64')
+      //   .then(file => {
+      //     console.log(file)
       AsyncStorage.getItem('authToken', (err, result) => {
         const authToken = result;
-
-        axios.post("http://3.37.74.8:8080/api/v1/file", {
+        // RNFetchBlob.fetch('POST', 'http://3.37.74.8:8080/api/v1/member-test/2', {
+        //   'Content-Type': 'multipart/form-data',
+        //   'X-AUTH-TOKEN': `${authToken}`,
+        //   "Accept":"multipart/form-data",
+        // }, [
+        //   // element with property `filename` will be transformed into `file` in form data
+        //   { name: 'video', filename: 'video/mp4', data: RNFetchBlob.wrap(uri) },
+        //   {
+        //     name: 'info', data: JSON.stringify({
+        //       "title": "hojun test video!!",
+        //       "description": "haha",
+        //       "userId": "lol",
+        //       "difficulty": "20",
+        //       "genre": "pop",
+        //       "gender": "male",
+        //       "length": "120",
+        //       "score": "90",
+        //       "postType": "TEST"
+        //     })
+        //   },
+        // ]).then(resp => {
+        //   console.log(resp)
+        //   resp.text()
+        // }).then(res => console.log(res))
+        // .catch((err) => {
+        //   console.log(err)
+        // })
+        fetch("http://3.37.74.8:8080/api/v1/file", {
+          method: "POST",
           headers: {
             'X-AUTH-TOKEN': `${authToken}`,
+            'Content-Type': 'multipart/form-data',
           },
           body: data,
         })
@@ -98,13 +127,35 @@ export default function Test_page({ navigation }) {
             console.log(res)
             res.text()
           })
-          .then(res => console.log('console log res' + res))
+          .then(res => console.log(res))
           .catch(err => console.log(err))
       })
+        // })
+        // .catch(err => console.log(err))
     } catch (err) {
       console.log(err)
     }
 
+    // try {
+    //   RNFS.readFile(uri, 'base64')
+    //     .then(file => {
+    //       console.log(file)
+    //       var param = {
+    //         ACL: 'public-read',
+    //         Bucket: "nanuda-product-image",
+    //         Key: "danshow.mp4",
+    //         Body: file,
+    //         ContentType: 'multipart/form-data'
+    //       };
+    //       myBucket.putObject(param)
+    //         .on("httpUploadProgress")
+    //         .send(err => console.log(err))
+    //     })
+    //     .catch(err => console.log(err));
+
+    // } catch (e) {
+    //   console.log(e)
+    // }
   }
 
   const Stop = () => {
