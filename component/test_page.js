@@ -92,11 +92,11 @@ export default function Test_page({ navigation }) {
           headers: {
             'X-AUTH-TOKEN': `${authToken}`,
           },
-          body: JSON.stringify({userTestVideo: data}),
+          body: data,
         })
           .then(res => {
             console.log(res)
-            res.json()
+            res.text()
           })
           .then(res => console.log('console log res' + res))
           .catch(err => console.log(err))
