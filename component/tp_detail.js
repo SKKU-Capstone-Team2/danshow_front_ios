@@ -39,8 +39,6 @@ export default function Tp_detail({navigation}) {
             <Icon name="search-outline" size={30}style={{padding:10}}></Icon>
             <Icon name="notifications-outline" size={30}style={{padding:10}}></Icon>
         </View>
-        
-        <Text>{paramvideoData.filePath}</Text>
         <Video
         source={{ uri: paramvideoData.filePath }}
         style={{ width: 400, height: 300 }}
@@ -65,10 +63,6 @@ export default function Tp_detail({navigation}) {
           </View>
         </View>
         <View style={{backgroundColor: '#E9E8E8', width:390, height:4, marginTop:20}}></View>
-        {/* <View style={{margin:20}}>
-          <Text style={{fontWeight:'bold', fontSize:15}}>Wrong Result</Text>
-          <View style={{marginTop:30, backgroundColor: '#C4C4C4', width:350, height:150}}></View>
-        </View> */}
       </ScrollView>
     </SafeAreaView>
   );
