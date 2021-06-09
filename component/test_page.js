@@ -86,7 +86,7 @@ export default function Test_page({ navigation }) {
           method: "POST",
           headers: {
             'X-AUTH-TOKEN': `${authToken}`,
-            // 'Content-Type': 'multipart/form-data',
+            'Content-Type': 'multipart/form-data',
           },
           body: data,
         })
@@ -107,6 +107,7 @@ export default function Test_page({ navigation }) {
   const Stop = () => {
     sound.pause()
     camera.current.stopRecording();
+    setSubmitStart(false)
     navigation.navigate('tp_detail')
   }
 
@@ -131,6 +132,7 @@ export default function Test_page({ navigation }) {
         ref={camera}
         type={RNCamera.Constants.Type.back}
         flashMode={RNCamera.Constants.FlashMode.on}
+        defaultVideoQuality={RNCamera.Constants.VideoQuality['480p']}
         androidCameraPermissionOptions={{
           title: 'Permission to use camera',
           message: 'We need your permission to use your camera',
