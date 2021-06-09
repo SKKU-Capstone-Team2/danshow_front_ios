@@ -1,12 +1,32 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {SafeAreaView, StyleSheet, Text, View, ScrollView, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Video from 'react-native-video';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Tp_detail({navigation}) {
 
+  const [paramvideoData, setparamvideoData] = useState({filePath:'', score:0, title:''});
   const videoRef = useRef(null);
-  // const videoBuf = () => { console.log("buffering");};
+
+  const getvideoInfo = () => {
+    AsyncStorage.getItem('authToken', (err, result) => {
+      const authToken = result;
+      axios.get("http://3.37.74.8:8080/api/v1/videos/test", {
+        headers: {
+          "X-AUTH-TOKEN": `${authToken}`,
+        },
+      })
+      .then(function (res) {
+        setparamvideoData(res.data[0]);
+      })          
+   });
+  }
+
+  useEffect(() => {
+    getvideoInfo();
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -19,9 +39,12 @@ export default function Tp_detail({navigation}) {
             <Icon name="search-outline" size={30}style={{padding:10}}></Icon>
             <Icon name="notifications-outline" size={30}style={{padding:10}}></Icon>
         </View>
+        
+        <Text>{paramvideoData.filePath}</Text>
         <Video
-        source={{ uri: "https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/video/579ee149-d30b-4bb4-9cd3-9531d53f4aa8-%5BCHOREOGRAPHY%5D+BTS+(FIRE)'+Dance+Practice.mp4" }}
+        source={{ uri: paramvideoData.filePath }}
         style={{ width: 400, height: 300 }}
+        // https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/video/78375756-ac3e-4184-9423-34673890a4ed-%5BCHOREOGRAPHY%5D%20BTS%20%28FIRE%29%27%20Dance%20Practice.mp4
         controls={true}
         ref={videoRef} />
         <View style={{backgroundColor: '#E9E8E8', width:390, height:4, marginTop:20}}></View>
@@ -32,7 +55,7 @@ export default function Tp_detail({navigation}) {
             style={{width:130, height:130}}
             source={require("./icon/circle.png")}></Image>
             <View style={{margin:20}}>
-              <Text style={{fontWeight:'bold', fontSize:30, marginBottom:10}}>Score: 95</Text>
+              <Text style={{fontWeight:'bold', fontSize:30, marginBottom:10}}>Score: {paramvideoData.score}</Text>
               <Text style={{fontWeight:'bold', fontSize:20, marginBottom:10}}>It looks like a dancer!</Text>
               <Text style={{fontWeight:'bold', fontSize:25, marginBottom:10, color:'#1058F4', textAlign:'center'}}>135th place</Text>
               <TouchableOpacity style={styles.touchOpa}>

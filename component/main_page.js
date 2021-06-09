@@ -10,6 +10,7 @@ export default function Mainpage({navigation}) {
   const getInfo = () => {
     AsyncStorage.getItem('authToken', (err, result) => {
       const authToken = result;
+      // console.log(authToken);
       axios.get("http://3.37.74.8:8080/api/v1/videos/main", {
         headers: {
           "X-AUTH-TOKEN": `${authToken}`,
@@ -17,11 +18,6 @@ export default function Mainpage({navigation}) {
       })
       .then(function (res) {
         setparamData(res.data.videoThumbnailList[0]);
-        console.log(res.data.videoThumbnailList[0]);
-        console.log(res.data.videoThumbnailList[1]);
-        console.log(res.data.videoThumbnailList[2]);
-        console.log(res.data.videoThumbnailList[3]);
-        console.log(res.data.videoThumbnailList[4]);
       })          
    });
   }
