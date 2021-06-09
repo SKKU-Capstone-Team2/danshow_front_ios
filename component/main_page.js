@@ -5,31 +5,25 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Mainpage({navigation}) {
-  const [paramData, setparamData] = useState('');
+  const [paramData, setparamData] = useState({id:'', image_url:'', thumbnailText:'', title: ''});
 
   const getInfo = () => {
     AsyncStorage.getItem('authToken', (err, result) => {
-      const authToken = result;   
+      const authToken = result;
       axios.get("http://3.37.74.8:8080/api/v1/videos/main", {
         headers: {
           "X-AUTH-TOKEN": `${authToken}`,
         },
       })
       .then(function (res) {
-        // paramData = res.data.videoThumbnailList[0];
-        // console.log(paramData);
         setparamData(res.data.videoThumbnailList[0]);
-        // console.log(res.status);
       })          
    });
   }
 
   useEffect(() => {
     getInfo();
-  })
-  
-  console.log(paramData);
-
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
