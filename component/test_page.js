@@ -1,20 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, Image, Linking } from 'react-native';
 import { RNCamera } from "react-native-camera"
-import AWS from "aws-sdk"
 import Sound from "react-native-sound"
 import AsyncStorage from '@react-native-community/async-storage';
 import * as RNFS from 'react-native-fs';
-
-AWS.config.update({
-  accessKeyId: 'AKIAYPG3AAD4GNGD555B',
-  secretAccessKey: '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'
-})
-
-const myBucket = new AWS.S3({
-  params: { Bucket: "nanuda-product-image" },
-  region: "ap-northeast-2",
-})
 
 const PendingView = () => (
   <View
