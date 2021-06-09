@@ -17,6 +17,11 @@ export default function Mainpage({navigation}) {
       })
       .then(function (res) {
         setparamData(res.data.videoThumbnailList[0]);
+        console.log(res.data.videoThumbnailList[0]);
+        console.log(res.data.videoThumbnailList[1]);
+        console.log(res.data.videoThumbnailList[2]);
+        console.log(res.data.videoThumbnailList[3]);
+        console.log(res.data.videoThumbnailList[4]);
       })          
    });
   }
