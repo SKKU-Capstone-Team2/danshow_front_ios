@@ -20,7 +20,7 @@ const HomeStack = createStackNavigator();
 function HomeStackScreen() {
     return (
         <HomeStack.Navigator>
-            <HomeStack.Screen name="MainPage" component={Mainpage} options={{headerShown: false}}/>
+            <HomeStack.Screen name="MainPagea" component={Mainpage} options={{headerShown: false}}/>
             <HomeStack.Screen name="Lecture" component={Lecture} options={{headerShown: false}}/>
             <HomeStack.Screen name="Cover" component={Cover} options={{headerShown: false}}/>
             <HomeStack.Screen name="test_page" component={Test_page} options={{headerShown: false}}/>
@@ -34,7 +34,7 @@ const CrewStack = createStackNavigator();
 function CrewStackScreen() {
     return (
         <CrewStack.Navigator>
-            <CrewStack.Screen name="Crew" component={Crew} options={{headerShown: false}}/>
+            <CrewStack.Screen name="Crewa" component={Crew} options={{headerShown: false}}/>
             <CrewStack.Screen name="Create_Crew" component={Create_Crew} options={{headerShown: false}}/>
             <CrewStack.Screen name="Detail_Crew" component={Detail_Crew} options={{headerShown: false}}/>
         </CrewStack.Navigator>
@@ -46,7 +46,7 @@ const MypageStack = createStackNavigator();
 function MypageStackScreen() {
     return (
         <MypageStack.Navigator>
-            <MypageStack.Screen name="Mypage" component={Mypage1} options={{headerShown: false}}/>
+            <MypageStack.Screen name="Mypagea" component={Mypage1} options={{headerShown: false}}/>
             <MypageStack.Screen name="Cnl" component={Create_new_lecture} options={{headerShown: false}}/>
         </MypageStack.Navigator>
     )
