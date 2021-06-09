@@ -70,33 +70,83 @@ export default function Test_page({ navigation }) {
         console.log('playback failed due to audio decoding errors');
       }
     });
-
-    const data = new FormData()
     const { uri } = await camera.current.recordAsync()
-    data.append("video", {
-      name: "danshow.mp4", type: 'video/mp4', uri: uri,
-    })
-    console.log(uri)
-    RNFS.readFile(uri, 'base64')
-      .then(file => {
-        console.log(file)
-        AsyncStorage.getItem('authToken', (err, result) => {
-          const authToken = result;
-          fetch("http://3.37.74.8:8080/api/v1/member-test/2", {
-            method: "POST",
-            headers: {
-              'X-AUTH-TOKEN': `${authToken}`,
-              'Content-Type': 'multipart/form-data'
-            },
-            body: file,
-          })
-            .then(res => res.json())
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
-        })
+
+    try {
+      const data = new FormData()
+      data.append("video", {
+        name: "danshow.mp4", 
+        type: 'video/mp4', 
+        uri: uri
       })
-      .catch(err => console.log(err))
-    
+      data.append("post", new Blob([JSON.stringify({
+        "title": "hojun test video!!",
+        "description": "haha",
+        "userId": "lol",
+        "difficulty": "20",
+        "genre": "pop",
+        "gender": "male",
+        "length": "120",
+        "score": "90",
+        "postType": "TEST"
+      })], {
+        type: "application/json"
+      }))
+      console.log(data)
+      console.log(uri)
+      // RNFS.readFile(uri, 'base64')
+      //   .then(file => {
+      //     console.log(file)
+      AsyncStorage.getItem('authToken', (err, result) => {
+        const authToken = result;
+        // RNFetchBlob.fetch('POST', 'http://3.37.74.8:8080/api/v1/member-test/2', {
+        //   'Content-Type': 'multipart/form-data',
+        //   'X-AUTH-TOKEN': `${authToken}`,
+        //   "Accept":"multipart/form-data",
+        // }, [
+        //   // element with property `filename` will be transformed into `file` in form data
+        //   { name: 'video', filename: 'video/mp4', data: RNFetchBlob.wrap(uri) },
+        //   {
+        //     name: 'info', data: JSON.stringify({
+        //       "title": "hojun test video!!",
+        //       "description": "haha",
+        //       "userId": "lol",
+        //       "difficulty": "20",
+        //       "genre": "pop",
+        //       "gender": "male",
+        //       "length": "120",
+        //       "score": "90",
+        //       "postType": "TEST"
+        //     })
+        //   },
+        // ]).then(resp => {
+        //   console.log(resp)
+        //   resp.text()
+        // }).then(res => console.log(res))
+        // .catch((err) => {
+        //   console.log(err)
+        // })
+        fetch("http://3.37.74.8:8080/api/v1/member-test/2", {
+          method: "POST",
+          headers: {
+            'X-AUTH-TOKEN': `${authToken}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({userTestVideo: data}),
+        })
+          .then(res => {
+            console.log(res)
+            res.json()
+          })
+          .then(res => console.log(res))
+          .catch(err => console.log(err))
+      })
+        // })
+        // .catch(err => console.log(err))
+    } catch (err) {
+      console.log(err)
+    }
+
     // try {
     //   RNFS.readFile(uri, 'base64')
     //     .then(file => {
