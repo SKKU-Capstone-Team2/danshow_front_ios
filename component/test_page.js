@@ -66,21 +66,21 @@ export default function Test_page({ navigation }) {
 
     try {
       const data = new FormData()
-      data.append("video", {
+      data.append("userTestVideo", {
         name: "danshow.mp4",
         type: 'video/mp4',
         uri: uri
       })
-      data.append("post", {
-        name: "test.json",
-        type: "application/json",
-        uri: 'file://' + path
-      })
+      // data.append("post", {
+      //   name: "test.json",
+      //   type: "application/json",
+      //   uri: 'file://' + path
+      // })
       console.log(uri)
       AsyncStorage.getItem('authToken', async (err, result) => {
         const authToken = result;
         console.log(authToken)
-        await fetch("http://3.37.74.8:8080/api/v1/file", {
+        await fetch("http://3.37.74.8:8080/api/v1/member-test/157", {
           method: "POST",
           headers: {
             'X-AUTH-TOKEN': `${authToken}`,

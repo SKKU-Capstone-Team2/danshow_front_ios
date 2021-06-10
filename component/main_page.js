@@ -28,7 +28,7 @@ export default function Mainpage({ navigation }) {
 
   const list = paramList.length > 0 ? paramList.slice(2,).map(listd => (
     <View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Cover', {id: listd.id})}>
         <Image source={{ uri: `${listd.image_url}` }} style={{ resizeMode: 'cover', width: 400, height: 180, marginBottom: 10 }}></Image>
       </TouchableOpacity>
       <View style={styles.contentInfo}>

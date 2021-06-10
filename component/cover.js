@@ -38,12 +38,15 @@ export default function Cover({navigation, route}) {
             <Icon name="notifications-outline" size={30}style={{padding:10}}></Icon>
         </View>
         <View style = {styles.contents}>
+        <View style={styles.videoView}>
           <Video
           source={{ uri: paramList.length > 0 ? paramList.videoResponseDto.filePath : "" }}
-          style={{ width: 400, height: 300 }}
+          style={styles.videoStyle}
+          resizeMode="contain"
           // https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/video/78375756-ac3e-4184-9423-34673890a4ed-%5BCHOREOGRAPHY%5D%20BTS%20%28FIRE%29%27%20Dance%20Practice.mp4
           controls={true}
           ref={videoRef} />
+          </View>
           {/* <YouTube
             videoId="gdZLi9oWNZg"
             apiKey="AIzaSyAq6s_Ni-NBSb6xtYN3Oup5ndKaXoeSSsg" 
@@ -154,5 +157,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-  }
+  },
+  videoView: {
+    justifyContent:'center', 
+    alignItems: 'center', 
+    width: "100%",
+    height: 300,
+    flexDirection: 'column',
+  },
+  videoStyle: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+  },
 });
