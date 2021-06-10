@@ -1,9 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {SafeAreaView, StyleSheet, Text, View, ScrollView, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import YouTube from 'react-native-youtube';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
+import Video from 'react-native-video';
 
 export default function Cover({navigation}) {
+
+  const [paramList, setparamList] = useState([]);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    AsyncStorage.getItem('authToken', (err, result) => {
+      const authToken = result;
+      axios.get("http://3.37.74.8:8080/api/v1/post/49", {
+        headers: {
+          "X-AUTH-TOKEN": `${authToken}`,
+        },
+      }).then(function (res) {
+        setparamList(res.data);
+        console.log(paramList);
+      })
+    });
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -17,7 +37,13 @@ export default function Cover({navigation}) {
             <Icon name="notifications-outline" size={30}style={{padding:10}}></Icon>
         </View>
         <View style = {styles.contents}>
-          <YouTube
+          <Video
+          source={{ uri: paramList.filePath }}
+          style={{ width: 400, height: 300 }}
+          // https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/video/78375756-ac3e-4184-9423-34673890a4ed-%5BCHOREOGRAPHY%5D%20BTS%20%28FIRE%29%27%20Dance%20Practice.mp4
+          controls={true}
+          ref={videoRef} />
+          {/* <YouTube
             videoId="gdZLi9oWNZg"
             apiKey="AIzaSyAq6s_Ni-NBSb6xtYN3Oup5ndKaXoeSSsg" 
             origin="http://www.youtube.com"
@@ -29,11 +55,11 @@ export default function Cover({navigation}) {
             onChangeQuality={(e) => console.log('onChangeQuality: ', e.quality)}
             onError={(e) => console.log('onError: ', e.error)}
             style={{width: '100%', height: 300}}
-            />
+            /> */}
             <View style = {styles.contentInfo}>
                 <View>
-                    <Text style={{fontWeight:'normal', fontSize:15}}>BTS-Dynamite Cover</Text>
-                    <Text style={{fontSize:14, color:'#C4C4C4', marginTop:5}}>Views: 14k  Difficulty: 5  Genre: k-pop</Text>
+                    <Text style={{fontWeight:'normal', fontSize:15}}>{paramList.title}</Text>
+                    <Text style={{fontSize:14, color:'#C4C4C4', marginTop:5}}>Views: 14k  Difficulty: {paramList.difficulty}  Genre: {paramList.genre}</Text>
                 </View>
                 <View style ={{marginLeft:30}}>
                   <Icon name="thumbs-up-outline" size={25}></Icon>

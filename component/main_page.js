@@ -6,27 +6,38 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Mainpage({navigation}) {
   const [paramData, setparamData] = useState({id:'', image_url:'', thumbnailText:'', title: ''});
+  const [paramList, setparamList] = useState([]);
 
-  const getInfo = () => {
+
+  useEffect(() => {
     AsyncStorage.getItem('authToken', (err, result) => {
       const authToken = result;
-      // console.log(authToken);
       axios.get("http://3.37.74.8:8080/api/v1/videos/main", {
         headers: {
           "X-AUTH-TOKEN": `${authToken}`,
         },
-      })
-      .then(function (res) {
+      }).then(function (res) {
         setparamData(res.data.videoThumbnailList[0]);
+        setparamList(res.data.videoThumbnailList);
       })          
-   });
-  }
-
-  useEffect(() => {
-    getInfo();
+    });
   }, [])
 
-  console.log(paramData);
+  const list = paramList.length > 0 ? paramList.slice(2,).map(listd => (
+    <View>
+      <TouchableOpacity>
+        <Image source={{uri: `${listd.image_url}`}} style={{resizeMode:'cover', width:400, height:180, marginBottom:10}}></Image>
+      </TouchableOpacity>
+      <View style = {styles.contentInfo}>
+          <Image source={require("./icon/person2.png")}></Image>
+          <View style={{marginLeft:10}}>
+              <Text style={{fontWeight:'bold', fontSize:15}}>{listd.title}</Text>
+              <Text style={{fontSize:12, color:'#C4C4C4', marginTop:5}}>Views: 20k  Difficulty: 4  Genre: k-pop</Text>
+          </View>
+      </View>
+    </View>
+  )) :
+  <View></View>
 
   return (
     <SafeAreaView style={styles.container}>
@@ -40,40 +51,29 @@ export default function Mainpage({navigation}) {
             <Icon name="notifications-outline" size={30}style={{padding:10}}></Icon>
         </View>
         <View style = {styles.contents}>
-            <Text style = {{padding:15, fontSize:15, fontWeight:'bold'}}>Cover Channel</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Cover')}>
-              <Image source={require("./icon/bts_screen.png")} style={{resizeMode:'cover', width:400, height:180, marginBottom:10}}></Image>
+              <Image source={{uri: paramList.length > 0 ? `${paramList[0].image_url}` : ""}} style={{resizeMode:'cover', width:400, height:180, marginBottom:10}}></Image>
             </TouchableOpacity>
             <View style = {styles.contentInfo}>
                 <Image source={require("./icon/person1.png")}></Image>
                 <View style={{marginLeft:10}}>
-                    <Text style={{fontWeight:'bold', fontSize:15}}>BTS-Dynamite cover</Text>
+                    <Text style={{fontWeight:'bold', fontSize:15}}>{paramList.length > 0 ? paramList[0].title : ""}</Text>
                     <Text style={{fontSize:12, color:'#C4C4C4', marginTop:5}}>Views: 14k  Difficulty: 5  Genre: k-pop</Text>
                 </View>
             </View>
         </View>
         <View style = {styles.contents}>
-            <Text style = {{padding:15, paddingLeft:10, fontSize:15, fontWeight:'bold'}}>Lecture Channel</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Lecture')}>
-              <Image source={require("./icon/brave_screen.png")} style={{resizeMode:'cover', width:400, height:180, marginBottom:10}}></Image>
+              <Image source={{uri: paramList.length > 0 ? `${paramList[1].image_url}` : ""}} style={{resizeMode:'cover', width:400, height:180, marginBottom:10}}></Image>
             </TouchableOpacity>
             <View style = {styles.contentInfo}>
                 <Image source={require("./icon/person2.png")}></Image>
                 <View style={{marginLeft:10}}>
-                    <Text style={{fontWeight:'bold', fontSize:15}}>BraveGirls-Rollin Lecture Video</Text>
+                    <Text style={{fontWeight:'bold', fontSize:15}}>{paramList.length > 0 ? paramList[1].title : ""}</Text>
                     <Text style={{fontSize:12, color:'#C4C4C4', marginTop:5}}>Views: 20k  Difficulty: 4  Genre: k-pop</Text>
                 </View>
             </View>
-            <TouchableOpacity>
-              <Image source={require("./icon/twice.jpeg")} style={{resizeMode:'cover', width:400, height:180, marginBottom:10}}></Image>
-            </TouchableOpacity>
-            <View style = {styles.contentInfo}>
-                <Image source={require("./icon/person2.png")}></Image>
-                <View style={{marginLeft:10}}>
-                    <Text style={{fontWeight:'bold', fontSize:15}}>Twice-CHEER UP Lecture Video</Text>
-                    <Text style={{fontSize:12, color:'#C4C4C4', marginTop:5}}>Views: 20k  Difficulty: 4  Genre: k-pop</Text>
-                </View>
-            </View>
+            {list}
         </View>
       </ScrollView>
   </SafeAreaView>
@@ -93,9 +93,9 @@ const styles = StyleSheet.create({
     height:54,
   },
   contents: {
-    borderBottomColor: '#C4C4C4',
-    borderBottomWidth: 1.5,
-    marginBottom: 10,
+    // borderBottomColor: '#C4C4C4',
+    // borderBottomWidth: 1.5,
+    // marginBottom: 10,
   },
   contentInfo: {
       flexDirection: 'row',
