@@ -6,7 +6,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import Video from 'react-native-video';
 
-export default function Cover({navigation}) {
+export default function Cover({navigation, route}) {
 
   const [paramList, setparamList] = useState([]);
   const videoRef = useRef(null);
@@ -15,12 +15,13 @@ export default function Cover({navigation}) {
   useEffect(() => {
     AsyncStorage.getItem('authToken', (err, result) => {
       const authToken = result;
-      axios.get("http://3.37.74.8:8080/api/v1/post/49", {
+      axios.get(`http://3.37.74.8:8080/api/v1/post/${route.params?.id}`, {
         headers: {
           "X-AUTH-TOKEN": `${authToken}`,
         },
       }).then(function (res) {
         setparamList(res.data);
+        console.log(res.data)
       })
     });
   }, [])

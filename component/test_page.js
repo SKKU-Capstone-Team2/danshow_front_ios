@@ -26,11 +26,18 @@ export default function Test_page({ navigation }) {
   const [sound, setSound] = useState(new Sound('https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/audio/58e333c3-c766-4691-b6a8-817c3a0f52d0-KakaoTalk_20210610_045252320_audio.mp3', Sound.MAIN_BUNDLE));
   
   const [submitStart, setSubmitStart] = useState(false)
+  useEffect(() => {
+    if (submitStart) {
+      setTimeout(() => {
+        Stop()
+      }, 14000)
+    }
+  }, [submitStart])
   const Submit = async () => {
     setSubmitStart(true)
     setStart(false)
     var path = RNFS.DocumentDirectoryPath + '/test.json';
-    RNFS.writeFile(path, `{"title" : "hojun test video!!",
+    RNFS.writeFile(path, `{"title" : "Danshow Video",
       "description" : "haha",
       "userId" : "lol",
       "difficulty" : "123",
@@ -46,13 +53,15 @@ export default function Test_page({ navigation }) {
       .catch((err) => {
         console.log(err.message);
       });
-    sound.play((success) => {
-      if (success) {
-        console.log('successfully finished playing');
-      } else {
-        console.log('playback failed due to audio decoding errors');
-      }
-    });
+    setTimeout(() => {
+      sound.play((success) => {
+        if (success) {
+          console.log('successfully finished playing');
+        } else {
+          console.log('playback failed due to audio decoding errors');
+        }
+      });
+    }, 200)
     const { uri } = await camera.current.recordAsync()
 
     try {
@@ -94,19 +103,10 @@ export default function Test_page({ navigation }) {
   }
 
   const Stop = () => {
-    sound.pause()
+    sound.stop()
     camera.current.stopRecording();
-    setSubmitStart(false)
-    navigation.goBack()
+    navigation.navigate('Main')
   }
-
-  useEffect(() => {
-    if (submitStart) {
-      setTimeout(() => {
-        Stop()
-      }, 14000)
-    }
-  }, [submitStart])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -162,7 +162,7 @@ export default function Test_page({ navigation }) {
                   setStart(true)
                   setTimeout(() => {
                     Submit()
-                  }, 5000)
+                  }, 4800)
                 }} style={{
                   width: 150,
                   backgroundColor: '#1058F4',
