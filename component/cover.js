@@ -11,6 +11,7 @@ export default function Cover({navigation}) {
   const [paramList, setparamList] = useState([]);
   const videoRef = useRef(null);
 
+
   useEffect(() => {
     AsyncStorage.getItem('authToken', (err, result) => {
       const authToken = result;
@@ -20,7 +21,6 @@ export default function Cover({navigation}) {
         },
       }).then(function (res) {
         setparamList(res.data);
-        console.log(paramList);
       })
     });
   }, [])
@@ -38,7 +38,7 @@ export default function Cover({navigation}) {
         </View>
         <View style = {styles.contents}>
           <Video
-          source={{ uri: paramList.filePath }}
+          source={{ uri: paramList.length > 0 ? paramList.videoResponseDto.filePath : "" }}
           style={{ width: 400, height: 300 }}
           // https://elasticbeanstalk-ap-northeast-2-600826168989.s3.ap-northeast-2.amazonaws.com/video/78375756-ac3e-4184-9423-34673890a4ed-%5BCHOREOGRAPHY%5D%20BTS%20%28FIRE%29%27%20Dance%20Practice.mp4
           controls={true}
